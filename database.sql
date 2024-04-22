@@ -5,9 +5,6 @@ CREATE TABLE "user" (
     "password" VARCHAR (1000) NOT NULL
 );
 
-INSERT INTO "user" ("username", "password")
-    VALUES ('admin', 'p@ssw0rd!!') RETURNING id;
-
 CREATE TABLE "project-list" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR (150),
