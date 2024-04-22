@@ -18,6 +18,8 @@ import Overview from '../Overview/Overview';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Details from '../Details/Details';
+import JSON from '../JSON/JSON';
 
 import './App.css';
 
@@ -51,13 +53,28 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows Overview else shows LoginPage
             exact
             path="/overview"
           >
             <Overview />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            // logged in shows Project Details else shows LoginPage
+            exact
+            path="/details"
+          >
+            <Details />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            //logged in shows the JSON input page, else shows LoginPage
+            exact
+            path="/json"
+          >
+            <JSON />
+          </ProtectedRoute>
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
