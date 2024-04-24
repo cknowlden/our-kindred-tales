@@ -10,6 +10,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@react-pdf/renderer": "^3.4.3",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.0.0",
