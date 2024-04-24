@@ -24,6 +24,7 @@ import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
 
 import './App.css';
+import TestRender from '../TestRender/TestRender';
 
 function App() {
   const dispatch = useDispatch();
@@ -84,6 +85,10 @@ function App() {
 
           <ProtectedRoute exact path="/new-test">
             <NewTest />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/test-render">
+            <TestRender />
           </ProtectedRoute>
 
           <Route exact path="/login">
