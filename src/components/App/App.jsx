@@ -20,6 +20,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
+import ConvertToPDF from '../ConvertToPDF/ConvertToPDF';
 
 import './App.css';
 
@@ -75,6 +76,15 @@ function App() {
           >
             <JSON />
           </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/convert"
+          >
+            <ConvertToPDF />
+          </ProtectedRoute>
+
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
