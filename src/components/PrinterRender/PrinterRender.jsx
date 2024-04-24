@@ -6,9 +6,11 @@ function PrinterRender() {
     <div>
       <h1>View printer friendly PDF render here.</h1>
       {/* TO DO: change button route to go back to associated project details page base on id */}
-      <Link to="/overview">
-        <button className="btn">Go Back</button>{' '}
-      </Link>
+      <center>
+        <Link to="/overview">
+          <button className="btn">Go Back</button>{' '}
+        </Link>
+      </center>
     </div>
   );
 }

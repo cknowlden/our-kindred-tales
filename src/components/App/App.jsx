@@ -21,6 +21,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
+import NewTest from '../NewTest/NewTest';
 
 import './App.css';
 
@@ -80,6 +81,11 @@ function App() {
           <ProtectedRoute exact path="/printer-render">
             <PrinterRender />
           </ProtectedRoute>
+
+          <ProtectedRoute exact path="/new-test">
+            <NewTest />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
