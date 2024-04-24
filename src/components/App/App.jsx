@@ -20,6 +20,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
+import ConvertToPDF from '../ConvertToPDF/ConvertToPDF';
 
 import './App.css';
 
@@ -66,6 +67,13 @@ function App() {
             path="/details"
           >
             <Details />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/convert"
+          >
+            <ConvertToPDF />
           </ProtectedRoute>
 
           <ProtectedRoute
