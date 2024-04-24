@@ -20,6 +20,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
+import PrinterRender from '../PrinterRender/PrinterRender';
 
 import './App.css';
 
@@ -74,6 +75,10 @@ function App() {
             path="/json"
           >
             <JSON />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/printer-render">
+            <PrinterRender />
           </ProtectedRoute>
           <Route exact path="/login">
             {user.id ? (
