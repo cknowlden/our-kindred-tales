@@ -20,8 +20,11 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
+import PrinterRender from '../PrinterRender/PrinterRender';
+import NewTest from '../NewTest/NewTest';
 
 import './App.css';
+import TestRender from '../TestRender/TestRender';
 
 function App() {
   const dispatch = useDispatch();
@@ -75,6 +78,19 @@ function App() {
           >
             <JSON />
           </ProtectedRoute>
+
+          <ProtectedRoute exact path="/printer-render">
+            <PrinterRender />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/new-test">
+            <NewTest />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/test-render">
+            <TestRender />
+          </ProtectedRoute>
+
           <Route exact path="/login">
             {user.id ? (
               // If the user is already logged in,
