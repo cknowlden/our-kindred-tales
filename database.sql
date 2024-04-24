@@ -1,35 +1,45 @@
-
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
+    "password" VARCHAR (1000) NOT NULL,
+    "email" VARCHAR (255),
+    "lulu_auth" VARCHAR (255),
+    "bubble_auth" VARCHAR (255)
 );
 
-CREATE TABLE "project-list" (
+CREATE TABLE "project_list" (
 	"id" SERIAL PRIMARY KEY,
-	"name" VARCHAR (150),
-	"updated" TIMESTAMP,
+	"project_name" VARCHAR (255),
+	"last_updated" TIMESTAMP,
+	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
-	"action" VARCHAR (150)
+	"action" VARCHAR (150),
+	"user_id" INT
 );
 
-CREATE TABLE "project-metadata" (
-	"title" VARCHAR (150),
+
+CREATE TABLE "project_details" (
+	"project_id" BIGINT,
+	"book_title" VARCHAR (255),
 	"author" VARCHAR (150),
-	"pdf" BOOLEAN,
+	"image_url" VARCHAR,
+	"pdf_only" BOOLEAN,
 	"gutter_margin" BOOLEAN,
 	"full_bleed" BOOLEAN,
-	"json" VARCHAR
+	"content" VARCHAR,
+	"page_count" BIGINT,
+	"margin_add" INT,
+	"interior_margin" INT,
+	"fbinterior_margin" INT,
+	"spine_width" INT
 );
 
-CREATE TABLE "gutter-addition" (
-	"page_count" BIGINT,
-	"margin_add" BIGINT,
-	"interior_margin" BIGINT,
-	"fb_interior_margin" BIGINT
-);
+DROP TABLE "project_details";
 
-CREATE TABLE "spine-width" (
-	"page_count" BIGINT,
-	"spine_width" BIGINT
+CREATE TABLE "status" (
+	"customer_review" BOOLEAN,
+	"exceeds_page_limit" BIGINT,
+	"sent_to_publisher" BOOLEAN,
+	"ready_for_admin_review" BOOLEAN,
+	"completed" BOOLEAN
 );
