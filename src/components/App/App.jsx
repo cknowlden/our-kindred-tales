@@ -22,6 +22,7 @@ import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
+import ConvertToPDF from '../ConvertToPDF/ConvertToPDF';
 
 import './App.css';
 import TestRender from '../TestRender/TestRender';
@@ -69,6 +70,14 @@ function App() {
             path="/details"
           >
             <Details />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Project Details else shows LoginPage
+            exact
+            path="/convert"
+          >
+            <ConvertToPDF />
           </ProtectedRoute>
 
           <ProtectedRoute

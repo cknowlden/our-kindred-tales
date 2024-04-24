@@ -32,6 +32,10 @@ function Nav() {
               Overview
             </Link>
 
+            <Link className="navLink" to="/convert">
+              pdfconverter
+            </Link>
+
             <Link className="navLink" to="/new-test">
               Create New Test
             </Link>
