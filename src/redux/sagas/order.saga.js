@@ -16,7 +16,7 @@ function* submitOrder(action) {
 }
 
 function* orderSaga() {
-  yield takeLatest('REGISTER', submitOrder);
+  yield takeLatest('SUBMIT_ORDER', submitOrder);
 }
 
 export default orderSaga;
