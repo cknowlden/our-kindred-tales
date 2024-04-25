@@ -2,6 +2,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 // worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
+  let access_token = {
+
+  }
   try {
     // Retrieve security token
     const url = 'https://api.sandbox.lulu.com/auth/realms/glasstree/protocol/openid-connect/token';
@@ -13,6 +16,7 @@ function* submitOrder(action) {
     axios.post(url, data, { headers })
       .then(response => {
         console.log('Response:', response.data);
+        access_token = response.data.access_token;
       })
       .catch(error => {
         console.error('Error:', error);
