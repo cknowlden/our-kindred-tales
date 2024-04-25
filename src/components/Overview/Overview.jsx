@@ -50,7 +50,9 @@ function Overview() {
                   <MenuIcon />
                 </TableCell>
                 <TableCell align="right">
-                  <button>View Details</button>
+                  <Link to="/detais">
+                    <button>View Details</button>
+                  </Link>
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon />
