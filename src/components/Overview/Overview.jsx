@@ -32,6 +32,7 @@ function Overview() {
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Actions</TableCell>
               <TableCell align="right"></TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -47,6 +48,9 @@ function Overview() {
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">
                   <MenuIcon />
+                </TableCell>
+                <TableCell align="right">
+                  <button>View Details</button>
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon />
