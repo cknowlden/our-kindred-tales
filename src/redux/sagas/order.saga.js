@@ -1,44 +1,26 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-
 // worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
-  let accessToken = ''
   try {
     // Retrieve security token
-    const postData = new URLSearchParams();
-    postData.append('grant_type', 'client_credentials');
-    
-    const config = {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ZjJjNDdmMTctOWMxZi00ZWZlLWIzYzEtMDI4YTNlZTRjM2M3OjMzOTViZGU4LTBkMjQtNGQ0Ny1hYTRjLWM4NGM3NjI0OGRiYw=='
-      }
+    const url = 'https://api.sandbox.lulu.com/auth/realms/glasstree/protocol/openid-connect/token';
+    const data = 'grant_type=client_credentials';
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic MjlmYTQzNDYtNTBiMC00NDRlLTgwNjUtYmNhOGMyOGMwMTMxOmRhOFB3NzBseVdJT2ZlUVg3TVpwMlVMNkw3cUNaOTlN'
     };
-    
-    axios.post('https://api.lulu.com/auth/realms/glasstree/protocol/openid-connect/token', postData, config)
+    axios.post(url, data, { headers })
       .then(response => {
         console.log('Response:', response.data);
-        accessToken = response.data;
       })
       .catch(error => {
         console.error('Error:', error);
       });
+    
     // Send order to lulu
-
-axios.post('https://api.lulu.com/print-jobs/', {
-  headers: {
-    'Authorization': `Bearer ${accessToken}`,
-    'Content-Type': 'application/json'
-  }
-})
-.then(response => {
-  console.log(response.data);
-})
-.catch(error => {
-  console.error('Error:', error);
-});
-
+    
+    
     // Retrieve order accepted status
   } catch (error) {
     console.log('Error with order submit:', error);

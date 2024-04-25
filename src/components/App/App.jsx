@@ -23,6 +23,8 @@ import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
 
+import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
+
 import './App.css';
 import TestRender from '../TestRender/TestRender';
 
@@ -122,6 +124,9 @@ function App() {
               // Otherwise, show the Landing page
               <LandingPage />
             )}
+          </Route>
+          <Route exact path="/orderform">
+            <SubmitOrderForm/>
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
