@@ -1,8 +1,9 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// worker Saga: will be fired on "REGISTER" actions
+// worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
+  let accessToken = ''
   try {
     // Retrieve security token
     const postData = new URLSearchParams();
@@ -18,12 +19,25 @@ function* submitOrder(action) {
     axios.post('https://api.lulu.com/auth/realms/glasstree/protocol/openid-connect/token', postData, config)
       .then(response => {
         console.log('Response:', response.data);
+        accessToken = response.data;
       })
       .catch(error => {
         console.error('Error:', error);
       });
     // Send order to lulu
-    
+
+axios.post('https://api.lulu.com/print-jobs/', {
+  headers: {
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
+  }
+})
+.then(response => {
+  console.log(response.data);
+})
+.catch(error => {
+  console.error('Error:', error);
+});
 
     // Retrieve order accepted status
   } catch (error) {
