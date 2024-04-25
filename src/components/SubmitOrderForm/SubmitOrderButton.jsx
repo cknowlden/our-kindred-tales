@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-function SubmitOrderButton(props) {
+function SubmitOrderForm() {
   const dispatch = useDispatch();
   return (
     <button
-      className={props.className}
+      className={submitOrder}
       onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}
     >
       Submit
@@ -13,4 +13,4 @@ function SubmitOrderButton(props) {
   );
 }
 
-export default SubmitOrderButton;
+export default SubmitOrderForm;
