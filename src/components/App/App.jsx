@@ -22,6 +22,7 @@ import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
+import ConvertToGCS from '../ConvertToGCS/ConvertToGCS';
 
 import './App.css';
 import TestRender from '../TestRender/TestRender';
@@ -70,6 +71,15 @@ function App() {
           >
             <Details />
           </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows ConvertToGCS else shows LoginPage
+            exact
+            path="/convert"
+          >
+            <ConvertToGCS />
+          </ProtectedRoute>
+
 
           <ProtectedRoute
             //logged in shows the JSON input page, else shows LoginPage
