@@ -34,8 +34,6 @@ CREATE TABLE "project_details" (
 	"spine_width" INT
 );
 
-DROP TABLE "project_details";
-
 CREATE TABLE "status" (
 	"customer_review" BOOLEAN,
 	"exceeds_page_limit" BIGINT,
