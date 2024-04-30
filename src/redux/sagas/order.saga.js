@@ -9,15 +9,15 @@ function* submitOrder(action) {
   try {
     // Retrieve security token
     const grantData = "grant_type=client_credentials";
-    const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      'Authorization': "Basic MjlmYTQzNDYtNTBiMC00NDRlLTgwNjUtYmNhOGMyOGMwMTMxOmRhOFB3NzBseVdJT2ZlUVg3TVpwMlVMNkw3cUNaOTlN",
-    };
+
     yield axios
       .post(
         `${url}/auth/realms/glasstree/protocol/openid-connect/token`,
-        grantData,
-        { headers }
+        grantData, headers = {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'Authorization': "Basic MjlmYTQzNDYtNTBiMC00NDRlLTgwNjUtYmNhOGMyOGMwMTMxOmRhOFB3NzBseVdJT2ZlUVg3TVpwMlVMNkw3cUNaOTlN",
+        }
+        
       )
       .then((response) => {
         accessToken = response.data;
