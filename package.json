@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "pdfmake": "^0.2.10",
     "pg": "^8.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
