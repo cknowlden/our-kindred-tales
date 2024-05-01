@@ -7,7 +7,7 @@ function SubmitOrderForm(props) {
     <div>
       <button onClick={() => dispatch({ type: "SUBMIT_ORDER" })}>Submit</button>
 
-      <button onClick={() => dispatch({ type: "FETCH_ORDERS" })}>
+      <button onClick={() => dispatch({ type: "FETCH_ORDER" })}>
         Retrieve jobs
       </button>
     </div>
