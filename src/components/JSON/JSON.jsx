@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import './JSON.css';
 
-function JSON() {
-  const dispatch = useDispatch();
+function JSON({ onSubmit }) {
   const [jsonInput, setJsonInput] = useState('');
 
   const submitInput = (event) => {
     event.preventDefault();
-    //TO DO: dispatch to saga
+    //console.log('Submitting JSON data:', jsonInput);
+    onSubmit(jsonInput); // Pass jsonInput to parent component
   };
 
   return (
