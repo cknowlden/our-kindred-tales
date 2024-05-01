@@ -1,45 +1,44 @@
 // DON'T FORGET TO REPLACE SANDBOX URL WITH REAL LULU FOR CLIENT
-
 import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 // worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
   const url = "https://api.sandbox.lulu.com";
-  let accessToken = '';
+  const grantData = "grant_type=client_credentials";
+  
   try {
+    let accessToken = '';
     // Retrieve security token
-    const grantData = "grant_type=client_credentials";
-
     yield axios
       .post(
         `${url}/auth/realms/glasstree/protocol/openid-connect/token`,
-        grantData, headers = {
+        grantData, {headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           'Authorization': "Basic MjlmYTQzNDYtNTBiMC00NDRlLTgwNjUtYmNhOGMyOGMwMTMxOmRhOFB3NzBseVdJT2ZlUVg3TVpwMlVMNkw3cUNaOTlN",
-        }
+        }}
         
       )
       .then((response) => {
-        accessToken = response.data;
+        accessToken = response.data.access_token;
         console.log("Response:", accessToken);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
     // Send order to lulu
-    const data = ''
-    axios.post(`${url}/print-jobs/`, data , headers = {
+    const data = {};
+    yield 
+    axios.post(`${url}/print-jobs/`, data , {headers: {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
-    })
+    }})
       .then(response => {
         console.log('Response:', response.data);
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    
-    // Retrieve order accepted status
+  
   } catch (error) {
     console.log("Error with order submit:", error);
     yield put({ type: "ORDER_FAILED" });
