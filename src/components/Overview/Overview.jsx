@@ -50,7 +50,7 @@ function Overview() {
                   <MenuIcon />
                 </TableCell>
                 <TableCell align="right">
-                  <Link to="/detais">
+                  <Link to="/details">
                     <button>View Details</button>
                   </Link>
                 </TableCell>
