@@ -25,7 +25,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
-app.use('/api/overview', overviewRouter);
+app.use('/api/overview', overviewRouter); //pulls project info into overview page
 
 // Listen Server & Port
 app.listen(PORT, () => {
