@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +12,14 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Overview() {
+  const projects = useSelector((store) => store.projects);
+  const dispatch = useDispatch();
+
+  //TO DO: insert the projects db info into the table
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROJECTS' });
+  }, []);
+
   function createData(name, updated, status) {
     return { name, updated, status };
   }
@@ -67,6 +76,7 @@ function Overview() {
           <button className="btn">Create New Test Project</button>
         </Link>
       </center>
+      <h1>{JSON.stringify(projects)}</h1>
     </>
   );
 }

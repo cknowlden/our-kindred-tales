@@ -8,7 +8,6 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "project_list" (
-	"project_id" BIGINT,
 	"project_name" VARCHAR (255),
 	"last_updated" TIMESTAMP,
 	"contact" VARCHAR (255),
@@ -16,6 +15,10 @@ CREATE TABLE "project_list" (
 	"action" VARCHAR (150),
 	"user_id" INT
 );
+
+INSERT INTO "project_list" ("project_name", "last_updated", "contact", "status")
+	VALUES 
+		('Footprints Through the Journey of My Life', '2024-04-24 10:50:00', 'evie89@gmail.com', 'ready for client review');
 
 DROP TABLE "project_list";
 
@@ -44,6 +47,13 @@ INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", 
 		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info'); 
 
 SELECT * FROM "project_details" ORDER BY "book_title";
+
+SELECT * FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;
+
+SELECT "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;
+
+
+SELECT "book_title", "author", 
 
 DROP TABLE "project_details";
 
