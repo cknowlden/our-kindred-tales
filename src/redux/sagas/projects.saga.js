@@ -5,7 +5,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* fetchProjects() {
   try {
     const projectsResponse = yield axios.get('/api/overview');
-    yield put({ type: 'SET_EVENTS', payload: projectsResponse.data });
+    yield put({ type: 'SET_PROJECTS', payload: projectsResponse.data });
   } catch (error) {
     console.log('Projects get request failed', error);
   }

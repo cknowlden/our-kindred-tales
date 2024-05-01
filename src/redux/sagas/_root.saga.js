@@ -3,7 +3,7 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import orderSaga from './order.saga';
-import projectsSaga from './overview.saga';
+import projectsSaga from './projects.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.

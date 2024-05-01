@@ -12,6 +12,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Overview() {
+  const projects = useSelector((store) => store.projects);
   function createData(name, updated, status) {
     return { name, updated, status };
   }
