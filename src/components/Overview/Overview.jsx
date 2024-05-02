@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import MenuIcon from '@mui/icons-material/Menu';
+import ActionMenu from '../ActionMenu/ActionMenu';
 
 function Overview() {
   function createData(name, updated, status) {
@@ -47,7 +47,7 @@ function Overview() {
                 <TableCell align="right">{row.updated}</TableCell>
                 <TableCell align="right">{row.status}</TableCell>
                 <TableCell align="right">
-                  <MenuIcon />
+                  <ActionMenu/>
                 </TableCell>
                 <TableCell align="right">
                   <Link to="/details">
