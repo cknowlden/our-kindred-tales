@@ -9,23 +9,37 @@ import testJSON from './testfile.json';
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
+//load test fonts
+pdfMake.fonts = {
+  Roboto: {
+    normal:
+      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+    bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+    italics:
+      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+    bolditalics:
+      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf',
+  },
+};
 // Optional: Set Roboto as the default font
 pdfmake.defaultFont = 'Roboto';
 
 //creating preferred fonts for text and headers
-pdfMake.fonts = {
-  merriweather: {
-    normal:
-      'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
-    bold: 'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
-    italics:
-      'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
-    bolditalics:
-      'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
-  },
-};
+// pdfMake.fonts = {
+//   merriweather: {
+//     normal:
+//       'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
+//     bold: 'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
+//     italics:
+//       'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
+//     bolditalics:
+//       'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
+//   },
+// };
 
 function PDFMake({ jsonData }) {
+  //altering code to accept testJSON file instead of jasonData imported through state:
+
   // Declare metadata state
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
@@ -34,9 +48,9 @@ function PDFMake({ jsonData }) {
 
   useEffect(() => {
     if (jsonData) {
-      // Parse jsonData since input from dispatch will be string
-      const data =
-        typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+      //This line is switching out the state data to instead use the testfile.json linked above
+      const data = testJSON;
+      //typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
 
       // Check if metadata exists in parsed data
       if (data && data.metadata) {
@@ -56,9 +70,9 @@ function PDFMake({ jsonData }) {
   const documentDefinition = {
     content: [],
     pageMargins: [40, 60, 40, 60],
-    defaultStyle: {
-      font: 'merriweather',
-    },
+    // defaultStyle: {
+    //   font: 'merriweather',
+    // },
     pageSize: {
       //page size is in 'points', where 1 inch = 72 points.
       //will need to add other page sizes to accommodate gutters
@@ -81,7 +95,7 @@ function PDFMake({ jsonData }) {
   const titlePage = {
     text: metadata.bookTitle,
     fontSize: 24,
-    bold: true,
+    //bold: true,
     alignment: 'center',
     margin: [0, 100, 0, 0],
   };
