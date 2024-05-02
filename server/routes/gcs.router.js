@@ -52,22 +52,48 @@ router.get('/files', async (req, res) => {
 
 
 // POST route to upload JSON data to Google Cloud Storage
-router.post('/uploadJson', async (req, res) => {
+// router.post('/uploadJson', async (req, res) => {
+//     try {
+//         const jsonData = req.body;
+//         const jsonString = JSON.stringify(jsonData);
+
+//         // Define destination file path in GCS
+//         const destinationFilePath = 'json-files/data.json';
+
+//         // Upload JSON data to GCS
+//         await storage.bucket('example-kindred-tales').file(destinationFilePath).save(jsonString);
+
+//         res.json({ message: 'JSON data uploaded to GCS successfully' });
+//     } catch (error) {
+//         console.error('Error uploading JSON data to GCS:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// });
+
+// POST route to upload PDF to Google Cloud Storage
+// Server-side code (gcs.router.js)
+router.post('/uploadPDF', async (req, res) => {
     try {
-        const jsonData = req.body;
-        const jsonString = JSON.stringify(jsonData);
+        // Get the PDF data from the request body
+        const pdfData = req.body.pdfData;
 
-        // Define destination file path in GCS
-        const destinationFilePath = 'json-files/data.json';
+        // Convert the PDF data from base64 to a buffer
+        const pdfBuffer = Buffer.from(pdfData, 'base64');
 
-        // Upload JSON data to GCS
-        await storage.bucket('example-kindred-tales').file(destinationFilePath).save(jsonString);
+        // Define destination file path for PDF in GCS
+        const destinationPdfFilePath = 'pdf-files/my_pdf.pdf';
 
-        res.json({ message: 'JSON data uploaded to GCS successfully' });
+        // Upload the PDF data to GCS
+        await storage.bucket('example-kindred-tales').file(destinationPdfFilePath).save(pdfBuffer);
+
+        res.json({ message: 'PDF uploaded to GCS successfully' });
     } catch (error) {
-        console.error('Error uploading JSON data to GCS:', error);
+        console.error('Error uploading PDF to GCS:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+
+
 
 module.exports = router;
