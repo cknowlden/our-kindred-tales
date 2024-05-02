@@ -10,32 +10,17 @@ import testJSON from './testfile.json';
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
 //load test fonts
+//creating preferred fonts for text and headers
 pdfMake.fonts = {
-  Roboto: {
-    normal:
-      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
-    bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
-    italics:
-      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
-    bolditalics:
-      'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf',
+  merriweather: {
+    normal: 'Merriweather-Regular.ttf',
+    bold: 'Merriweather-Regular.ttf',
+    italics: 'Merriweather-Regular.ttf',
+    bolditalics: 'Merriweather-Regular.ttf',
   },
 };
 // Optional: Set Roboto as the default font
-pdfmake.defaultFont = 'Roboto';
-
-//creating preferred fonts for text and headers
-// pdfMake.fonts = {
-//   merriweather: {
-//     normal:
-//       'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
-//     bold: 'https://fonts.googleapis.com/css2?family=Montserrat%3Aital%2Cwght%400%2C100..900&directory=3&display=block&text=%2001TWacdefghinorsty',
-//     italics:
-//       'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
-//     bolditalics:
-//       'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital@0;1&display=swap',
-//   },
-// };
+pdfmake.defaultFont = 'merriweather';
 
 function PDFMake({ jsonData }) {
   //altering code to accept testJSON file instead of jasonData imported through state:
@@ -70,9 +55,9 @@ function PDFMake({ jsonData }) {
   const documentDefinition = {
     content: [],
     pageMargins: [40, 60, 40, 60],
-    // defaultStyle: {
-    //   font: 'merriweather',
-    // },
+    defaultStyle: {
+      font: 'merriweather',
+    },
     pageSize: {
       //page size is in 'points', where 1 inch = 72 points.
       //will need to add other page sizes to accommodate gutters

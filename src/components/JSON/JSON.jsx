@@ -22,7 +22,6 @@ function JSON({ onSubmit }) {
             cols={80}
             name="jsonInput"
             value={jsonInput}
-            required
             placeholder="Enter JSON"
             onChange={(event) => setJsonInput(event.target.value)}
           />
