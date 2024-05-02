@@ -9,7 +9,6 @@ import testJSON from './testfile.json';
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
-//load test fonts
 //creating preferred fonts for text and headers
 pdfMake.fonts = {
   merriweather: {
@@ -73,8 +72,14 @@ function PDFMake({ jsonData }) {
 
     // Footer
     footer: (currentPage, pageCount) => {
+      //The page at which we want to start numbering pages
+      const startingPage = 3; // Change this to the page number after the table of contents
+      const adjustedPageNumber = currentPage + startingPage - 1;
+
       return {
-        text: `Page ${currentPage} of ${pageCount}`,
+        //text: `Page ${currentPage} of ${pageCount}`,
+        text: `${adjustedPageNumber} `,
+
         alignment: 'center',
         fontSize: 10,
         margin: [0, 30, 0, 0],
@@ -87,7 +92,7 @@ function PDFMake({ jsonData }) {
     text: metadata.bookTitle,
     fontSize: 24,
     font: 'montserrat',
-    //bold: true,
+    bold: true,
     alignment: 'center',
     margin: [0, 100, 0, 0],
   };
@@ -97,19 +102,26 @@ function PDFMake({ jsonData }) {
     text: metadata.author,
     fontSize: 18,
     font: 'montserrat',
-
-    bold: true,
+    bold: false,
     alignment: 'center',
     margin: [0, 20, 0, 0],
   };
   documentDefinition.content.push(authorTitle);
   documentDefinition.content.push({ text: '', pageBreak: 'before' });
 
+  // Table of Contents
+  const tocTitle = {
+    text: 'Table of Contents',
+    fontSize: 18,
+    bold: true,
+    margin: [0, 20, 0, 20], // Top margin
+  };
+  documentDefinition.content.push(tocTitle);
+
   //create table of contents
   const TOC = {
     toc: {
       // id: 'mainToc'  // optional
-      title: { text: 'Table of Contents', style: 'header' },
     },
   };
   documentDefinition.content.push(TOC);
@@ -131,6 +143,7 @@ function PDFMake({ jsonData }) {
     const chapterTitle = {
       text: question.title,
       fontSize: 14,
+      font: 'montserrat',
       bold: true,
       margin: [0, 0, 0, 10], // Bottom margin
       id: chapterId, // Set ID for linking from TOC
