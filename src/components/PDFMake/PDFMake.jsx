@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
+// shortened book file for testing
+import testJSON from './testfile.json';
+
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -26,6 +29,8 @@ function PDFMake({ jsonData }) {
   // Declare metadata state
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
+  //parsing test data
+  console.log('testJSON', testJSON);
 
   useEffect(() => {
     if (jsonData) {
