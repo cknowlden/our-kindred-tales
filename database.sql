@@ -14,10 +14,9 @@ CREATE TABLE "project_list" (
 	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
 	"action" VARCHAR (150),
-	"user_id" INT
+	"user_id" INT,
+	"lulu_id" BIGINT,
 );
-
-DROP TABLE "project_list";
 
 CREATE TABLE "project_details" (
 	"id" SERIAL PRIMARY KEY,
@@ -35,7 +34,7 @@ CREATE TABLE "project_details" (
 	"spine_width" INT,
 	"add_title_divider" BOOLEAN,
 	"pdf_file_id" VARCHAR,
-	"url" VARCHAR	
+	"url" VARCHAR,
 );
 
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
@@ -45,7 +44,6 @@ INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", 
 
 SELECT * FROM "project_details" ORDER BY "book_title";
 
-DROP TABLE "project_details";
 
 CREATE TABLE "status" (
 	"customer_review" BOOLEAN,
