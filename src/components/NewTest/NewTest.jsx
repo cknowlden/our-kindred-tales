@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import JSON from '../JSON/JSON';
+import PDFMake from '../PDFMake/PDFMake';
 
 function NewTest() {
-  //TO DO: function to dispatch to saga for submitting render for test JSON data
+  const [jsonData, setJsonData] = useState(null);
+
+  const handleJSONSubmit = (data) => {
+    // Handle JSON submission and update jsonData state
+    //console.log('Submitted JSON Data:', data);
+    setJsonData(data);
+  };
+
   return (
     <div>
-      <h1>top section with editable table for project name and contact info</h1>
-      <div>Enter JSON here to submit to PDF formatter</div>
-      <center>
-        <button className="btn">Submit</button>
-      </center>
+      <h1>Top section with editable table for project name and contact info</h1>
+      <JSON onSubmit={handleJSONSubmit} /> {/* Pass callback function */}
+      {jsonData && <PDFMake jsonData={jsonData} />}{' '}
     </div>
   );
 }
