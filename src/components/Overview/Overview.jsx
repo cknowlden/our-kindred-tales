@@ -20,16 +20,6 @@ function Overview() {
     dispatch({ type: 'FETCH_PROJECTS' });
   }, []);
 
-  // function createData(name, updated, status) {
-  //   return { name, updated, status };
-  // }
-
-  //TO DO: Replace the below rows with actual project data from database
-  // const rows = [
-  //   createData('Project #1', '2024-01-09', 'Customer Working'),
-  //   createData('Project #2', '2024-04-11', 'Ready for Print'),
-  // ];
-
   return (
     <>
       <TableContainer component={Paper}>
