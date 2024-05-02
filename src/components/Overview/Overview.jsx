@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ActionMenu from '../ActionMenu/ActionMenu';
+import Swal from 'sweetalert2';
 
 function Overview() {
   const projects = useSelector((store) => store.projects);
@@ -20,15 +21,20 @@ function Overview() {
     dispatch({ type: 'FETCH_PROJECTS' });
   }, []);
 
-  // function createData(name, updated, status) {
-  //   return { name, updated, status };
-  // }
-
-  //TO DO: Replace the below rows with actual project data from database
-  // const rows = [
-  //   createData('Project #1', '2024-01-09', 'Customer Working'),
-  //   createData('Project #2', '2024-04-11', 'Ready for Print'),
-  // ];
+  const showConfirmationDelete = () => {
+    Swal.fire({
+      text: 'Are you sure you want to delete this event?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('The event has been deleted').then(() => handleDelete());
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+    });
+  };
 
   return (
     <>
@@ -58,7 +64,7 @@ function Overview() {
                 <TableCell align="right">{project.last_updated}</TableCell>
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">
-                  <ActionMenu/>
+                  <ActionMenu />
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon />
