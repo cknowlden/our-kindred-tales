@@ -72,18 +72,21 @@ function PDFMake({ jsonData }) {
 
     // Footer
     footer: (currentPage, pageCount) => {
-      //The page at which we want to start numbering pages
-      const startingPage = 3; // Change this to the page number after the table of contents
-      const adjustedPageNumber = currentPage + startingPage - 1;
+      // Exclude page numbers from the first three pages
+      if (currentPage <= 2) {
+        return null; // Return null to exclude page number
+      } else {
+        // Adjust page number to start from 1 after the third page
+        const adjustedPageNumber = currentPage - 2;
 
-      return {
-        //text: `Page ${currentPage} of ${pageCount}`,
-        text: `${adjustedPageNumber} `,
-
-        alignment: 'center',
-        fontSize: 10,
-        margin: [0, 30, 0, 0],
-      };
+        return {
+          //text: `Page ${currentPage} of ${pageCount}`,
+          text: `${adjustedPageNumber} `,
+          alignment: 'center',
+          fontSize: 10,
+          margin: [0, 30, 0, 0],
+        };
+      }
     },
   };
 
@@ -145,7 +148,7 @@ function PDFMake({ jsonData }) {
       fontSize: 14,
       font: 'montserrat',
       bold: true,
-      margin: [0, 0, 0, 10], // Bottom margin
+      margin: [20, 20, 30, 0], // Bottom margin
       id: chapterId, // Set ID for linking from TOC
       tocItem: true,
     };
@@ -162,6 +165,7 @@ function PDFMake({ jsonData }) {
       if (element.type === 'text') {
         const textContent = {
           text: element.value,
+          alignment: 'justify',
           fontSize: 10.5,
           margin: [20, 20, 30, 0], // Text margins
         };
@@ -176,7 +180,10 @@ function PDFMake({ jsonData }) {
     });
 
     // Add spacing between chapters
-    documentDefinition.content.push({ text: '', margin: [0, 0, 0, 20] });
+    documentDefinition.content.push({
+      text: '',
+      margin: [0, 0, 0, 20],
+    });
   });
 
   // Create PDF
