@@ -18,36 +18,54 @@ router.get('/files', async (req, res) => {
         // Get files in example-kindred-tales bucket from GCS
         const [files] = await storage.bucket('example-kindred-tales').getFiles();
 
-        // Get file information
         const fileData = await Promise.all(files.map(async (file) => {
             // Read the content of each file
             const data = await file.download();
 
-            // Determine file type based on file extension
             const fileType = path.extname(file.name).toLowerCase();
             let content;
 
             if (fileType === '.json') {
-                // Parse JSON content for JSON files
                 content = JSON.parse(data[0].toString());
             } else {
-                // For other file types (e.g., text), treat content as text
+                // For other file types, treat content as text
                 content = data[0].toString();
             }
 
-            // Construct an object with file name and content
-            return {
-                name: file.name,
-                content: content
-            };
+            if (content && content.questions && content.metadata) {
+                return {
+                    questions: content.questions.map(question => ({
+                        title: question.title,
+                        elements: question.elements.map(element => ({
+                            type: element.type,
+                            value: element.value || ''
+                        }))
+                    })),
+                    metadata: content.metadata
+                };
+            } else {
+                return null;
+            }
         }));
 
-        res.json(fileData);
+        // Find the first non-null file data
+        const matchingFileData = fileData.find(file => file !== null);
+
+        // If no matching file data is found, return an empty object
+        const responseObject = matchingFileData || {};
+
+        // Return the response object
+        res.json(responseObject);
     } catch (error) {
         console.error('Error fetching files:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+;
+
+
+
+
 
 
 
@@ -71,29 +89,13 @@ router.get('/files', async (req, res) => {
 // });
 
 // POST route to upload PDF to Google Cloud Storage
-// Server-side code (gcs.router.js)
-router.post('/uploadPDF', async (req, res) => {
-    try {
-        // Get the PDF data from the request body
-        const pdfData = req.body.pdfData;
 
-        // Convert the PDF data from base64 to a buffer
-        const pdfBuffer = Buffer.from(pdfData, 'base64');
-
-        // Define destination file path for PDF in GCS
-        const destinationPdfFilePath = 'pdf-files/my_pdf.pdf';
-
-        // Upload the PDF data to GCS
-        await storage.bucket('example-kindred-tales').file(destinationPdfFilePath).save(pdfBuffer);
-
-        res.json({ message: 'PDF uploaded to GCS successfully' });
-    } catch (error) {
-        console.error('Error uploading PDF to GCS:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
 
 
 
 
 module.exports = router;
+
+
+
+
