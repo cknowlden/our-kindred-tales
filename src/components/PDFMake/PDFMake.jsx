@@ -18,6 +18,12 @@ pdfMake.fonts = {
     italics: 'Merriweather-Regular.ttf',
     bolditalics: 'Merriweather-Regular.ttf',
   },
+  montserrat: {
+    normal: 'Montserrat-Regular.ttf',
+    bold: 'Montserrat-Bold.ttf',
+    italics: 'Montserrat-VariableFont_wght.ttf',
+    bolditalics: 'Montserrat-VariableFont_wght.ttf',
+  },
 };
 // Optional: Set Roboto as the default font
 pdfmake.defaultFont = 'merriweather';
@@ -80,6 +86,7 @@ function PDFMake({ jsonData }) {
   const titlePage = {
     text: metadata.bookTitle,
     fontSize: 24,
+    font: 'montserrat',
     //bold: true,
     alignment: 'center',
     margin: [0, 100, 0, 0],
@@ -89,6 +96,8 @@ function PDFMake({ jsonData }) {
   const authorTitle = {
     text: metadata.author,
     fontSize: 18,
+    font: 'montserrat',
+
     bold: true,
     alignment: 'center',
     margin: [0, 20, 0, 0],
