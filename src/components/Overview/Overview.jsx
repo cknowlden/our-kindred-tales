@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ActionMenu from '../ActionMenu/ActionMenu';
 import Swal from 'sweetalert2';
+import { IconButton } from '@mui/material';
 
 function Overview() {
   const projects = useSelector((store) => store.projects);
@@ -67,7 +68,14 @@ function Overview() {
                   <ActionMenu />
                 </TableCell>
                 <TableCell align="right">
-                  <DeleteOutlineIcon />
+                  <IconButton
+                    aria-label="delete"
+                    color="primary"
+                    size="large"
+                    onClick={showConfirmationDelete}
+                  >
+                    <DeleteOutlineIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
