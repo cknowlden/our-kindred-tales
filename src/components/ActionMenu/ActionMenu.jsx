@@ -45,7 +45,7 @@ function ActionMenu() {
           </button>
         </MenuItem>
         <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
-        <MenuItem onClick={handleClose}>Client currently reviewing</MenuItem>
+        <MenuItem onClick={handleClose}>View status</MenuItem>
         <MenuItem><Link to="/details">View Details</Link></MenuItem>
       </Menu>
     </div>

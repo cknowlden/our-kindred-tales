@@ -6,7 +6,7 @@ function SubmitOrderForm(props) {
   const dispatch = useDispatch();
   return (
     <div>
-      <button onClick={() => dispatch({ type: "FETCH_ORDER" })}>
+      <button onClick={() => dispatch({ type: "FETCH_STATUS" })}>
         Retrieve all job statuses
       </button>
       <ActionMenu />

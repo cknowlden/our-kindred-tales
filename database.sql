@@ -13,12 +13,9 @@ CREATE TABLE "project_list" (
 	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
 	"action" VARCHAR (150),
-	"user_id" INT
+	"user_id" INT,
+	"lulu_id" BIGINT,
 );
-
-INSERT INTO "project_list" ("project_name", "last_updated", "contact", "status")
-	VALUES 
-		('Footprints Through the Journey of My Life', '2024-04-24 10:50:00', 'evie89@gmail.com', 'ready for client review');
 
 DROP TABLE "project_list";
 
@@ -38,7 +35,7 @@ CREATE TABLE "project_details" (
 	"spine_width" INT,
 	"add_title_divider" BOOLEAN,
 	"pdf_file_id" VARCHAR,
-	"url" VARCHAR	
+	"url" VARCHAR,
 );
 
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
@@ -55,7 +52,6 @@ SELECT "project_list".project_name, "project_list".contact, "project_list".last_
 
 SELECT "book_title", "author", 
 
-DROP TABLE "project_details";
 
 CREATE TABLE "status" (
 	"customer_review" BOOLEAN,
