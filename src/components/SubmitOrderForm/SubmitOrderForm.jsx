@@ -1,15 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import ActionMenu from "../ActionMenu/ActionMenu";
 
 function SubmitOrderForm(props) {
   const dispatch = useDispatch();
   return (
     <div>
-      <button onClick={() => dispatch({ type: "SUBMIT_ORDER" })}>Submit</button>
-
-      <button onClick={() => dispatch({ type: "FETCH_ORDERS" })}>
+      <button onClick={() => dispatch({ type: "FETCH_ORDER" })}>
         Retrieve jobs
       </button>
+      <ActionMenu />
     </div>
   );
 }
