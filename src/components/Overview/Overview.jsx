@@ -50,11 +50,6 @@ function Overview() {
                   <ActionMenu/>
                 </TableCell>
                 <TableCell align="right">
-                  <Link to="/details">
-                    <button>View Details</button>
-                  </Link>
-                </TableCell>
-                <TableCell align="right">
                   <DeleteOutlineIcon />
                 </TableCell>
               </TableRow>

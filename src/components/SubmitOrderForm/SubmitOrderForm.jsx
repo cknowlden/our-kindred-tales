@@ -7,7 +7,7 @@ function SubmitOrderForm(props) {
   return (
     <div>
       <button onClick={() => dispatch({ type: "FETCH_ORDER" })}>
-        Retrieve jobs
+        Retrieve all job statuses
       </button>
       <ActionMenu />
     </div>
