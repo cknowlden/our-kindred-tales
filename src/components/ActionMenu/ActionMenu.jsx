@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch,} from "react-redux";
+import { Link } from 'react-router-dom';
 
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -45,6 +46,7 @@ function ActionMenu() {
         </MenuItem>
         <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
         <MenuItem onClick={handleClose}>Client currently reviewing</MenuItem>
+        <MenuItem><Link to="/details">View Details</Link></MenuItem>
       </Menu>
     </div>
   );
