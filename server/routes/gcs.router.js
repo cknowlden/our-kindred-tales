@@ -3,7 +3,8 @@ const router = express.Router();
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 require('dotenv').config();
-
+const multer = require('multer');
+const upload = multer();
 
 // Create a new storage. Storage is an object used by GCS. Allows for uploading, downloading, deleting etc.
 //see import above
@@ -63,13 +64,7 @@ router.get('/files', async (req, res) => {
 });
 ;
 
-
-
-
-
-
-
-// POST route to upload JSON data to Google Cloud Storage
+// WORKING POST route to upload JSON data to Google Cloud Storage
 // router.post('/uploadJson', async (req, res) => {
 //     try {
 //         const jsonData = req.body;
@@ -88,14 +83,34 @@ router.get('/files', async (req, res) => {
 //     }
 // });
 
+
+
+
 // POST route to upload PDF to Google Cloud Storage
+//** Remember to npm install multer (middleware for uploading the pdf)
+router.post('/uploadPDF', upload.single('pdfData'), async (req, res) => {
+    try {
+        // Gets PDF using Multer Middleware. Buffer (aka temporary storage) contains raw binary data of PDF.
+        const fileBuffer = req.file.buffer;
+
+        // GCS bucket name
+        const bucketName = 'example-kindred-tales';
+
+        // Destination file path in GCS
+        const destinationFilePath = `pdf-files/testing.pdf`;
+
+        // Upload the file buffer to GCS bucket
+        await storage.bucket(bucketName).file(destinationFilePath).save(fileBuffer);
+
+        res.send('File uploaded successfully');
+    } catch (error) {
+        console.error('Error uploading file to GCS:', error);
+        res.status(500).send('Internal server error');
+    }
+});
 
 
 
 
 
 module.exports = router;
-
-
-
-
