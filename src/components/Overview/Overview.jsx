@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,18 +9,33 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import MenuIcon from '@mui/icons-material/Menu';
+import ActionMenu from '../ActionMenu/ActionMenu';
+import Swal from 'sweetalert2';
+import { IconButton } from '@mui/material';
 
 function Overview() {
-  function createData(name, updated, status) {
-    return { name, updated, status };
-  }
+  const projects = useSelector((store) => store.projects);
+  const dispatch = useDispatch();
 
-  //TO DO: Replace the below rows with actual project data from database
-  const rows = [
-    createData('Project #1', '2024-01-09', 'Customer Working'),
-    createData('Project #2', '2024-04-11', 'Ready for Print'),
-  ];
+  //TO DO: insert the projects db info into the table
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROJECTS' });
+  }, []);
+
+  const showConfirmationDelete = () => {
+    Swal.fire({
+      text: 'Are you sure you want to delete this event?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('The event has been deleted').then(() => handleDelete());
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      }
+    });
+  };
 
   return (
     <>
@@ -28,45 +44,51 @@ function Overview() {
           <TableHead>
             <TableRow>
               <TableCell>Project</TableCell>
+              <TableCell align="right">Contact</TableCell>
               <TableCell align="right">Last Updated</TableCell>
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Actions</TableCell>
               <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {/* {rows.map((row) => ( */}
+            {projects.map((project) => (
               <TableRow
-                key={row.name}
+                key={project.contact}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {project.project_name}
                 </TableCell>
-                <TableCell align="right">{row.updated}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
+                <TableCell align="right">{project.contact}</TableCell>
+                <TableCell align="right">{project.last_updated}</TableCell>
+                <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">
-                  <MenuIcon />
-                </TableCell>
-                <TableCell align="right">
-                  <Link to="/detais">
-                    <button>View Details</button>
-                  </Link>
+                  <ActionMenu />
                 </TableCell>
                 <TableCell align="right">
-                  <DeleteOutlineIcon />
+                  <IconButton
+                    aria-label="delete"
+                    color="primary"
+                    size="large"
+                    onClick={showConfirmationDelete}
+                  >
+                    <DeleteOutlineIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <center>
+      {/* TO DO: add functionality for create new test project */}
+      {/* <center>
         <Link to="/new-test">
           <button className="btn">Create New Test Project</button>
         </Link>
-      </center>
+      </center> */}
+      {/* <h1>{JSON.stringify(projects)}</h1> */}
     </>
   );
 }
