@@ -14,6 +14,7 @@ const storage = new Storage({
 
 
 // GET route to fetch files from Google Cloud Storage
+// don't forget to install npm install @google-cloud/storage
 router.get('/files', async (req, res) => {
     try {
         // Get files in example-kindred-tales bucket from GCS
