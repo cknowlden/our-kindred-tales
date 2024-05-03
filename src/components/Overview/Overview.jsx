@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 import { IconButton } from '@mui/material';
 
 function Overview() {
-  const projects = useSelector((store) => store.projects);
+  const projects = useSelector((store) => store.projectsReducer);
   const dispatch = useDispatch();
 
   //TO DO: insert the projects db info into the table
@@ -55,7 +55,7 @@ function Overview() {
             {/* {rows.map((row) => ( */}
             {projects.map((project) => (
               <TableRow
-                key={project.contact}
+                key={projects.contact}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
