@@ -68,7 +68,7 @@ function App() {
           <ProtectedRoute
             // logged in shows Project Details else shows LoginPage
             exact
-            path="/details"
+            path="/details/:projectId"
           >
             <Details />
           </ProtectedRoute>
@@ -126,7 +126,7 @@ function App() {
             )}
           </Route>
           <Route exact path="/orderform">
-            <SubmitOrderForm/>
+            <SubmitOrderForm />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,13 +15,20 @@ import Swal from 'sweetalert2';
 import { IconButton } from '@mui/material';
 
 function Overview() {
-  const projects = useSelector((store) => store.projectsReducer);
+  const projects = useSelector((store) => store.projects);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //TO DO: insert the projects db info into the table
   useEffect(() => {
     dispatch({ type: 'FETCH_PROJECTS' });
   }, []);
+
+  const displayProject = (projectDisplay) => {
+    console.log(projectDisplay);
+    dispatch({ type: 'SET_PROJECT_DETAILS', payload: projectDisplay });
+    history.push(`/details/${projectDisplay.id}`);
+  };
 
   const showConfirmationDelete = () => {
     Swal.fire({
@@ -55,6 +63,7 @@ function Overview() {
             {/* {rows.map((row) => ( */}
             {projects.map((project) => (
               <TableRow
+                onClick={(event) => displayProject(project)}
                 key={projects.contact}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >

@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   //     `;
 
   const queryText = `
-    SELECT "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;`;
+    SELECT "project_list".id, "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;`;
   pool
     .query(queryText)
     .then((dbRes) => {

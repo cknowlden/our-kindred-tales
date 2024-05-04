@@ -1,16 +1,18 @@
-import React from "react";
-import { useDispatch,} from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function ActionMenu() {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  // const project = useSelector((store) => store.projects);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -19,16 +21,22 @@ function ActionMenu() {
     setAnchorEl(null);
   };
 
+  // const displayProject = (projectDisplay) => {
+  //   console.log(projectDisplay);
+  //   dispatch({ type: 'SET_PROJECT_DETAILS', payload: projectDisplay });
+  //   history.push('/details');
+  // };
+
   return (
     <div>
       <Button
         id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
+        aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
+        aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <MenuIcon/>
+        <MenuIcon />
       </Button>
       <Menu
         id="basic-menu"
@@ -36,17 +44,19 @@ function ActionMenu() {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          'aria-labelledby': 'basic-button',
         }}
       >
         <MenuItem onClick={handleClose}>
-          <button onClick={() => dispatch({ type: "SUBMIT_ORDER" })}>
-          Send to Print
+          <button onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
+            Send to Print
           </button>
         </MenuItem>
         <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
         <MenuItem onClick={handleClose}>View status</MenuItem>
-        <MenuItem><Link to="/details">View Details</Link></MenuItem>
+        <MenuItem>
+          <Link to="/details">View Details</Link>
+        </MenuItem>
       </Menu>
     </div>
   );

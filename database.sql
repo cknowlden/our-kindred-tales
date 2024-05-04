@@ -8,6 +8,7 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "project_list" (
+  "id" SERIAL PRIMARY KEY,
 	"project_name" VARCHAR (255),
 	"last_updated" TIMESTAMP,
 	"contact" VARCHAR (255),
