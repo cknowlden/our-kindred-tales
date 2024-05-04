@@ -46,8 +46,8 @@ CREATE TABLE "project_details" (
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
 	VALUES 
 		('Footprints Through the Journey of My Life', 'Evelyn Graham', 'https://picsum.photos/200/300', FALSE, 3, TRUE, 100, 1, 1, 2, 2, TRUE, '1700541671277x948515555305848800_interior', 'https://app.kindredtales.net/version-test/'),
-		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info'); 
-		
+		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info');
+
 CREATE TABLE "status" (
 	"customer_review" BOOLEAN,
 	"exceeds_page_limit" BIGINT,
