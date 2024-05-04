@@ -4,7 +4,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* deleteProject(action) {
   try {
     const deleteResponse = yield axios.delete(
-      `/api/details/${action.payload.id}`
+      `/api/overview/${action.payload.id}`
     );
     yield put({ type: 'SET_DELETE_PROJECT', payload: deleteResponse.data });
   } catch (error) {

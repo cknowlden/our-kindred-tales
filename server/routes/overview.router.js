@@ -21,8 +21,12 @@ router.get('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   pool
     .query(
+      //   `
+      // DELETE FROM "project_list" WHERE project_id=$1;
+      // `,
       `
-    DELETE FROM "project_list" WHERE project_id=$1;`,
+    DELETE FROM "project_list" WHERE id=$1;
+    `,
       [req.params.id]
     )
     .then((result) => {
