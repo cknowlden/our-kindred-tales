@@ -14,6 +14,8 @@ import ActionMenu from '../ActionMenu/ActionMenu';
 import Swal from 'sweetalert2';
 import { IconButton } from '@mui/material';
 
+import '../App/App.css';
+
 function Overview() {
   const projects = useSelector((store) => store.projects);
   const dispatch = useDispatch();
@@ -63,11 +65,15 @@ function Overview() {
             {/* {rows.map((row) => ( */}
             {projects.map((project) => (
               <TableRow
-                onClick={(event) => displayProject(project)}
                 key={projects.contact}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell
+                  className="tr"
+                  onClick={(event) => displayProject(project)}
+                  component="th"
+                  scope="row"
+                >
                   {project.project_name}
                 </TableCell>
                 <TableCell align="right">{project.contact}</TableCell>

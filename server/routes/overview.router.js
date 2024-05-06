@@ -22,4 +22,17 @@ router.get('/', (req, res) => {
     });
 });
 
+// router.get('/:id', (req, res) => {
+//   const query = `SELECT "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title WHERE "id"=$1;`;
+//   pool
+//     .query(query, [req.params.id])
+//     .then((result) => {
+//       res.send(result.rows[0]);
+//     })
+//     .catch((error) => {
+//       console.log('error getting projects id', error);
+//       res.sendStatus(500);
+//     });
+// });
+
 module.exports = router;

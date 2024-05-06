@@ -110,3 +110,7 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+.tr:hover {
+  background-color: #00acb0;
+}
