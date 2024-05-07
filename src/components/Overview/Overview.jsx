@@ -18,21 +18,19 @@ function Overview() {
   const dispatch = useDispatch();
 
   //TO DO: insert the projects db info into the table
-  useEffect(() => {
-    dispatch({ type: 'FETCH_PROJECTS' });
-  }, []);
 
   const handleDelete = (event) => {
-    const id = projects.project_id;
+    console.log(event.target.id);
     dispatch({
       type: 'DELETE_PROJECT',
       payload: {
-        id: id,
+        targetId: event.target.id,
       },
     });
   };
 
-  const showConfirmationDelete = () => {
+  const showConfirmationDelete = (event) => {
+    event.preventDefault();
     Swal.fire({
       text: 'Are you sure you want to delete this event?',
       icon: 'warning',
@@ -41,11 +39,15 @@ function Overview() {
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('The event has been deleted').then(() => handleDelete());
+        Swal.fire('The event has been deleted').then(() => handleDelete(event));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
   };
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROJECTS' });
+  }, []);
 
   return (
     <>
@@ -79,10 +81,11 @@ function Overview() {
                 </TableCell>
                 <TableCell align="right">
                   <IconButton
+                    onClick={showConfirmationDelete}
+                    id={project.project_id}
                     aria-label="delete"
                     color="primary"
                     size="large"
-                    onClick={showConfirmationDelete}
                   >
                     <DeleteOutlineIcon />
                   </IconButton>

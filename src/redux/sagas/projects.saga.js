@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 //worker saga will be fired on "FETCH_PROJECTS" actions
 function* fetchProjects() {
@@ -12,7 +12,7 @@ function* fetchProjects() {
 }
 
 function* projectsSaga() {
-  yield takeEvery('FETCH_PROJECTS', fetchProjects);
+  yield takeLatest('FETCH_PROJECTS', fetchProjects);
 }
 
 export default projectsSaga;
