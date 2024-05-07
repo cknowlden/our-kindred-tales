@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import testJson from './testfile.json';
 
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -13,6 +14,7 @@ function PDFMake({ jsonData }) {
   // Declare metadata state
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (jsonData) {
@@ -49,6 +51,8 @@ function PDFMake({ jsonData }) {
       };
     },
   };
+
+  console.log(documentDefinition.pageCount);
 
   // Title page
   const titlePage = {
