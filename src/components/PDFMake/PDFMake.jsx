@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import testJson from './testfile.json';
 
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -15,6 +14,7 @@ function PDFMake({ jsonData }) {
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
+  const projects = useSelector((store) => store.projects);
 
   useEffect(() => {
     if (jsonData) {
@@ -43,6 +43,10 @@ function PDFMake({ jsonData }) {
 
     // Footer
     footer: (currentPage, pageCount) => {
+      dispatch({
+        type: 'CHANGE_PAGECOUNT',
+        payload: { pcount: pageCount, detailId: projects[0].id },
+      });
       return {
         text: `Page ${currentPage} of ${pageCount}`,
         alignment: 'center',

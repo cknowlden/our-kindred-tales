@@ -5,11 +5,13 @@ const router = express.Router();
 //pulls the project info from db
 
 router.put('/', (req, res) => {
+  console.log(req.body.pcount);
+
   const putQuery = `UPDATE "project_details"
   SET "page_count" = $1
   WHERE "project_details".id =$2;`;
 
-  const putValueQuery = [req.body.pageCount, req.body.projects.id];
+  const putValueQuery = [req.body[0], req.body[1]];
 
   pool
     .query(putQuery, putValueQuery)
