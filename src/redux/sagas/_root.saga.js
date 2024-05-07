@@ -7,6 +7,7 @@ import projectsSaga from './projects.saga';
 import jobsSaga from './printJobs.saga';
 import googleCloudSaga from './gcs.saga';
 // import detailsSaga from './projectDetails.saga';
+import deleteSaga from './delete.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     projectsSaga(),
     jobsSaga(),
     googleCloudSaga(),
+    deleteSaga(),
   ]);
 }

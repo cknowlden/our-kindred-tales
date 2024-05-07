@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,14 +13,8 @@ import Paper from '@mui/material/Paper';
 
 function Details() {
   const project = useSelector((store) => store.viewDetails);
-  // const { projectId } = useParams();
   const dispatch = useDispatch();
-  // const [heading, setHeading] = useState('Functional Component');
-  const gcsPDF = useSelector((store) => store.googleCloud);
-
-  // useEffect(() => {
-  //   dispatch({ type: 'FETCH_PROJECT_DETAILS', payload: projectId });
-  // }, [projectId]);
+  const history = useHistory();
 
   return (
     <>
@@ -51,8 +46,14 @@ function Details() {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <h3>{gcsPDF.pdfFileId}</h3>
+      <button
+        className="btn"
+        onClick={() => {
+          history.push('/overview');
+        }}
+      >
+        Back
+      </button>
     </>
   );
 }

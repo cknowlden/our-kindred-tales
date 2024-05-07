@@ -32,6 +32,16 @@ function Overview() {
     history.push(`/details/${projectDisplay.id}`);
   };
 
+  const handleDelete = (event) => {
+    const id = projects.project_id;
+    dispatch({
+      type: 'DELETE_PROJECT',
+      payload: {
+        id: id,
+      },
+    });
+  };
+
   const showConfirmationDelete = () => {
     Swal.fire({
       text: 'Are you sure you want to delete this event?',

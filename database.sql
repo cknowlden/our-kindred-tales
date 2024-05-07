@@ -8,17 +8,21 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "project_list" (
-  "id" SERIAL PRIMARY KEY,
+	"project_id" INT,
 	"project_name" VARCHAR (255),
 	"last_updated" TIMESTAMP,
 	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
 	"action" VARCHAR (150),
 	"user_id" INT,
-	"lulu_id" BIGINT,
+	"lulu_id" BIGINT
 );
 
-DROP TABLE "project_list";
+INSERT INTO "project_list" ("project_id", "project_name", "last_updated", "contact", "status")
+	VALUES 
+		(1, 'Footprints Through the Journey of My Life', '2024-04-24', 'evie89@gmail.com', 'ready for client review'),
+		(2, 'Adventures with Grandma', '2024-03-21', 'Gertrude75@hotmail.com', 'sent to publisher');
+
 
 CREATE TABLE "project_details" (
 	"id" SERIAL PRIMARY KEY,
@@ -36,23 +40,13 @@ CREATE TABLE "project_details" (
 	"spine_width" INT,
 	"add_title_divider" BOOLEAN,
 	"pdf_file_id" VARCHAR,
-	"url" VARCHAR,
+	"url" VARCHAR	
 );
 
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
 	VALUES 
 		('Footprints Through the Journey of My Life', 'Evelyn Graham', 'https://picsum.photos/200/300', FALSE, 3, TRUE, 100, 1, 1, 2, 2, TRUE, '1700541671277x948515555305848800_interior', 'https://app.kindredtales.net/version-test/'),
-		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info'); 
-
-SELECT * FROM "project_details" ORDER BY "book_title";
-
-SELECT * FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;
-
-SELECT "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_name = "project_details".book_title ORDER BY "project_details".book_title ASC;
-
-
-SELECT "book_title", "author", 
-
+		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info');
 
 CREATE TABLE "status" (
 	"customer_review" BOOLEAN,
