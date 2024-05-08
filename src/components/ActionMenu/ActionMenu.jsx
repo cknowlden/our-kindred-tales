@@ -47,12 +47,13 @@ function ActionMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
+        <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
+        <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: "SUBMIT_ORDER" })}>
-            Create Publisher PDF
+            Send to Publisher
           </p>
         </MenuItem>
-        <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
       </Menu>
     </div>
   );
