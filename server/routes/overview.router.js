@@ -5,7 +5,7 @@ const router = express.Router();
 //pulls the project info from db
 router.get('/', (req, res) => {
   const queryText = `
-  SELECT "project_list".project_id, "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status FROM "project_list" JOIN "project_details" ON "project_list".project_id = "project_details".id ORDER BY "project_details".book_title ASC;
+  SELECT "project_list".project_id, "project_list".project_name, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".id FROM "project_list" JOIN "project_details" ON "project_list".project_id = "project_details".id ORDER BY "project_details".book_title ASC;
   `;
   pool
     .query(queryText)
@@ -32,16 +32,11 @@ router.get('/', (req, res) => {
 // });
 
 router.delete('/:id', (req, res) => {
+  console.log('this is the delete that i want', req.params);
+  console.log(req.params.id);
+  const deleteQuery = `DELETE FROM "project_list" WHERE "project_id"=$1;`;
   pool
-    .query(
-      //   `
-      // DELETE FROM "project_list" WHERE project_id=$1;
-      // `,
-      `
-    DELETE FROM "project_list" WHERE id=$1;
-    `,
-      [req.params.id]
-    )
+    .query(deleteQuery, [req.params.id])
     .then((result) => {
       res.sendStatus(200);
     })

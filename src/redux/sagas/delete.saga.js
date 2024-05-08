@@ -1,18 +1,18 @@
+import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { put, takeEvery } from 'redux-saga/effects';
 
 function* deleteProject(action) {
+  console.log(action.payload);
   try {
-    const deleteResponse = yield axios.delete(
-      `/api/overview/${action.payload.id}`
-    );
-    yield put({ type: 'SET_DELETE_PROJECT', payload: deleteResponse.data });
+    yield axios.delete(`/api/overview/${action.payload.targetId}`);
+
+    yield put({ type: 'FETCH_PROJECTS', payload: action.payload.data });
   } catch (error) {
     console.log('Project could not be deleted', error);
   }
 }
 function* deleteSaga() {
-  yield takeEvery('DELETE_PROJECT', deleteProject);
+  yield takeLatest('DELETE_PROJECT', deleteProject);
 }
 
 export default deleteSaga;

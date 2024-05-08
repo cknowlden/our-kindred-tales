@@ -10,7 +10,9 @@ const passport = require('./strategies/user.strategy');
 // Route Includes
 const userRouter = require('./routes/user.router');
 const overviewRouter = require('./routes/overview.router');
+const pdfmakeRouter = require('./routes/pdfmake.router');
 const gcsRouter = require('./routes/gcs.router');
+
 
 // Express Middleware
 app.use(express.json());
@@ -27,7 +29,9 @@ app.use(passport.session());
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/overview', overviewRouter); //pulls project info into overview page
+app.use('/api/pdfmake', pdfmakeRouter);
 app.use('/api/gcs', gcsRouter);
+
 
 // Listen Server & Port
 app.listen(PORT, () => {
