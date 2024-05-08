@@ -61,13 +61,16 @@ function PDFMake({ jsonData }) {
     content: [],
 
     header: function (currentPage) {
-      return {
-        font: 'montserrat',
-        fontSize: 10,
-        alignment: 'center',
-        margin: [0, 20, 0, 0],
-        text: currentPage % 2 ? metadata.author : metadata.bookTitle,
-      };
+      if (currentPage > 3) {
+        return {
+          font: 'merriweather',
+          fontSize: 10,
+          alignment: 'center',
+          margin: [0, 20, 0, 0],
+          text: currentPage % 2 ? metadata.author : metadata.bookTitle,
+        };
+      }
+      return null;
     },
 
     // header: {
