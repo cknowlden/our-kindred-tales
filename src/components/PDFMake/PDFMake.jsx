@@ -33,13 +33,8 @@ function PDFMake({ jsonData }) {
   // Declare metadata state
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
-<<<<<<< HEAD
   //parsing test data
   console.log('testJSON', testJSON);
-=======
-  const dispatch = useDispatch();
-  const projects = useSelector((store) => store.projects);
->>>>>>> 4b3dc00f29d772737d91a21b0ad86af9eb765407
 
   useEffect(() => {
     if (jsonData) {
