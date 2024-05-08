@@ -9,6 +9,7 @@ function Nav() {
 
   return (
     <div className="nav">
+      <img src={'/public/feather.png'} />
       <Link to="/home">
         <h2 className="nav-title">Kindred Tales</h2>
       </Link>
