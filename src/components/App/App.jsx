@@ -26,7 +26,6 @@ import NewTest from '../NewTest/NewTest';
 import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
 
 import './App.css';
-import TestRender from '../TestRender/TestRender';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,7 +67,7 @@ function App() {
           <ProtectedRoute
             // logged in shows Project Details else shows LoginPage
             exact
-            path="/details"
+            path="/details/:projectId"
           >
             <Details />
           </ProtectedRoute>
@@ -87,10 +86,6 @@ function App() {
 
           <ProtectedRoute exact path="/new-test">
             <NewTest />
-          </ProtectedRoute>
-
-          <ProtectedRoute exact path="/test-render">
-            <TestRender />
           </ProtectedRoute>
 
           <Route exact path="/login">
@@ -126,7 +121,7 @@ function App() {
             )}
           </Route>
           <Route exact path="/orderform">
-            <SubmitOrderForm/>
+            <SubmitOrderForm />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

@@ -1,14 +1,16 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
+import ActionMenu from "../ActionMenu/ActionMenu";
 
 function SubmitOrderForm(props) {
   const dispatch = useDispatch();
   return (
-    <button
-      onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}
-    >
-      Submit
-    </button>
+    <div>
+      <button onClick={() => dispatch({ type: "FETCH_STATUS" })}>
+        Retrieve all job statuses
+      </button>
+      <ActionMenu />
+    </div>
   );
 }
 
