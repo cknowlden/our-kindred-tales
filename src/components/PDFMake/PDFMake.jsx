@@ -59,6 +59,26 @@ function PDFMake({ jsonData }) {
   // Document definition
   const documentDefinition = {
     content: [],
+
+    header: function (currentPage) {
+      return {
+        font: 'montserrat',
+        fontSize: 10,
+        alignment: 'center',
+        margin: [0, 20, 0, 0],
+        text: currentPage % 2 ? metadata.author : metadata.bookTitle,
+      };
+    },
+
+    // header: {
+    //   text: metadata.author,
+    //   font: 'montserrat',
+    //   fontSize: 10,
+    //   alignment: 'center',
+    //   margin: [0, 20, 0, 0],
+    // },
+
+    // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
     pageMargins: [40, 60, 40, 60],
     defaultStyle: {
       font: 'merriweather',
@@ -103,7 +123,7 @@ function PDFMake({ jsonData }) {
 
   const authorTitle = {
     text: metadata.author,
-    fontSize: 18,
+    fontSize: 20,
     font: 'montserrat',
     bold: false,
     alignment: 'center',
@@ -116,6 +136,9 @@ function PDFMake({ jsonData }) {
   const tocTitle = {
     text: 'Table of Contents',
     fontSize: 18,
+    font: 'montserrat',
+    alignment: 'center',
+
     bold: true,
     margin: [0, 20, 0, 20], // Top margin
   };
@@ -146,9 +169,10 @@ function PDFMake({ jsonData }) {
     const chapterTitle = {
       text: question.title,
       fontSize: 14,
+      alignment: 'center',
       font: 'montserrat',
-      bold: true,
-      margin: [20, 20, 30, 0], // Bottom margin
+      bold: false,
+      margin: [30, 20, 30, 0], // Bottom margin
       id: chapterId, // Set ID for linking from TOC
       tocItem: true,
     };
@@ -167,7 +191,7 @@ function PDFMake({ jsonData }) {
           text: element.value,
           alignment: 'justify',
           fontSize: 10.5,
-          margin: [20, 20, 30, 0], // Text margins
+          margin: [30, 20, 30, 0], // Text margins
         };
         documentDefinition.content.push(textContent);
       } else if (element.type === 'image') {
