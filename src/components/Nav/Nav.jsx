@@ -9,10 +9,11 @@ function Nav() {
 
   return (
     <div className="nav">
-      <img src={'/public/feather.png'} />
+      <img src={'/public/feather.png'} className="icon" />
       <Link to="/home">
         <h2 className="nav-title">Kindred Tales</h2>
       </Link>
+
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (

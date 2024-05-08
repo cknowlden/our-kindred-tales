@@ -17,7 +17,6 @@
   font-size: 24px;
   font-weight: 700;
   color: #f2f2f2;
-  padding-left: 10px;
   margin: 0;
 }
 
@@ -25,7 +24,7 @@
   display: inline-block;
   color: #f2f2f2;
   background-color: #1e495b;
-  text-align: center;
+  text-align: left;
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
