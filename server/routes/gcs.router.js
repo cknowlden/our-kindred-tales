@@ -13,6 +13,48 @@ const storage = new Storage({
     keyFilename: process.env.SERVICE_ACCOUNT_KEY_PATH //This is using the client key etc. from .env file
 });
 
+// GET route to fetch all JSON files from GCS to display on Overview page
+// Don't forget to install npm install @google-cloud/storage
+router.get('/files/JSON', async (req, res) => {
+    try {
+        // The folder pathway in GCS where JSON files are located
+        const folderPath = 'json-files/';
+
+        // Get the files from the GCS bucket at /json-files
+        const [files] = await storage.bucket('example-kindred-tales').getFiles({
+            prefix: folderPath
+        });
+
+
+        const jsonFilesMetadata = [];
+
+        for (const file of files) {
+            // Read the content of the file
+            const data = await file.download();
+
+            // Parse JSON to string
+            const jsonString = data[0].toString();
+
+            const content = JSON.parse(jsonString);
+
+            // Push metadata to the array
+            if (content && content.metadata && content.metadata.pdfFileId) {
+                jsonFilesMetadata.push({
+                    pdfFileId: content.metadata.pdfFileId,
+                    fileName: file.name,
+                    metadata: content.metadata
+                });
+            }
+        }
+
+        return res.json(jsonFilesMetadata);
+    } catch (error) {
+        console.error('Error fetching JSON files:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 // // GET route to fetch JSON files from Google Cloud Storage
 // // don't forget to install npm install @google-cloud/storage
 router.get('/files/JSON/:pdfFileId', async (req, res) => {
