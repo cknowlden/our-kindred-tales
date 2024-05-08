@@ -5,6 +5,8 @@ import userSaga from './user.saga';
 import orderSaga from './order.saga';
 import projectsSaga from './projects.saga';
 import jobsSaga from './printJobs.saga';
+import googleCloudSaga from './gcs.saga';
+// import detailsSaga from './projectDetails.saga';
 import deleteSaga from './delete.saga';
 import pagecountSaga from './pagecount.saga';
 
@@ -23,6 +25,7 @@ export default function* rootSaga() {
     orderSaga(),
     projectsSaga(),
     jobsSaga(),
+    googleCloudSaga(),
     deleteSaga(),
     pagecountSaga(),
   ]);

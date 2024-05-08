@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,11 +14,20 @@ import ActionMenu from '../ActionMenu/ActionMenu';
 import Swal from 'sweetalert2';
 import { IconButton } from '@mui/material';
 
+import '../App/App.css';
+
 function Overview() {
   const projects = useSelector((store) => store.projects);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //TO DO: insert the projects db info into the table
+
+  const displayProject = (projectDisplay) => {
+    console.log(projectDisplay);
+    dispatch({ type: 'SET_PROJECT_DETAILS', payload: projectDisplay });
+    history.push(`/details/${projectDisplay.id}`);
+  };
 
   const handleDelete = (event) => {
     console.log(event.target.id);
@@ -67,10 +77,15 @@ function Overview() {
             {/* {rows.map((row) => ( */}
             {projects.map((project) => (
               <TableRow
-                key={project.contact}
+                key={projects.contact}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell
+                  className="tr"
+                  onClick={(event) => displayProject(project)}
+                  component="th"
+                  scope="row"
+                >
                   {project.project_name}
                 </TableCell>
                 <TableCell align="right">{project.contact}</TableCell>
