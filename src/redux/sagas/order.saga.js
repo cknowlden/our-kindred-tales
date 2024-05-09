@@ -1,6 +1,9 @@
+/// <reference types="vite/client" />
 // DON'T FORGET TO REPLACE SANDBOX URL WITH REAL LULU FOR CLIENT
 import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
+const luluKey = import.meta.env.VITE_LULU_KEY;
+
 // worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
   const url = "https://api.sandbox.lulu.com";
@@ -16,8 +19,7 @@ function* submitOrder(action) {
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization:
-              "Basic MjlmYTQzNDYtNTBiMC00NDRlLTgwNjUtYmNhOGMyOGMwMTMxOmRhOFB3NzBseVdJT2ZlUVg3TVpwMlVMNkw3cUNaOTlN",
+            Authorization: luluKey,
           },
         }
       )

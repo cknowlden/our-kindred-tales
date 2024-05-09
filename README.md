@@ -1,124 +1,53 @@
-# Prime Solo Project - Starting Repo
+D&D Character Generator
 
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+Duration: 3 weeks
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+Welcome to the D&D Character Generator! This tool is designed to help you quickly create unique and exciting characters for your Dungeons & Dragons adventures. Whether you're a seasoned player looking for inspiration or a Dungeon Master in need of NPCs, this generator has you covered.
 
-## Use the Template for This Repository (Don't Clone)
+to see the fully functional site, please visit: https://cryptic-spire-50176-a27bdd8c1984.herokuapp.com/#/home
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account. Make the project `PUBLIC`!
+Installation
+1.Create a database named character_generator
+2.The queries in database.sql are set up to create all required tables. The project is built on Postgres, so you will need to make sure you have that installed. I recommend using Postico to run those queries as that was what I used to create them.
+3.Open your editor of choice and run npm install
+4. Run npm run server in your terminal
+5.Run npm run client in your terminal
 
-## Prerequisites
+Usage
+Select Race and Class: Choose the race and class for your character. The generator provides a list of options to choose from, including standard races like humans, elves, dwarves, and more, as well as a variety of classes such as fighter, wizard, rogue, and cleric.
+Choose Background: Select a background for your character to add depth and backstory. Background options include noble, criminal, acolyte, folk hero, and more. Each background provides specific skills, tools, and personality traits.
+background, and any additional details.
+Customize: Feel free to customize your character further by adding unique details, such as personality traits, ideals, bonds, and flaws. You can also choose equipment, spells, feats, and other features to tailor your character to your liking.
+Roll Ability Scores: Roll dice to determine your character's ability scores. You can roll for each ability individually or use a standard array if you prefer. The abilities include Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma.
+Generate Character: Once you've made your selections, click the "Generate Character" button to create your character. The generator will compile all the chosen options into a character sheet, complete with name, race, class, ability scores, 
+Save and Share: Save your character sheet for future reference or share it with your gaming group. You can also use the character sheet as a basis for creating character tokens or miniatures for your tabletop sessions.
 
-Before you get started, make sure you have the following software installed on your computer:
+Features
+Random Generation: Quickly generate ability scores.
+Customization: Tailor your character by selecting specific race, class, background, and other details to suit your preferences.
+Character Sheet: View and print a detailed character sheet containing all the essential information about your character.
+Feedback
+We are constantly striving to improve the D&D Character Generator to better serve the needs of players and Dungeon Masters alike. If you have any feedback, suggestions, or feature requests, please don't hesitate to contact us. Your input is invaluable in helping us enhance this tool for the D&D community.
 
-- [Node.js](https://nodejs.org/en)
-- [PostgreSQL](https://www.postgresql.org)
-- [Nodemon](https://nodemon.io)
+Disclaimer
+This generator is intended for personal use and entertainment purposes only. Dungeons & Dragons is a registered trademark of Wizards of the Coast LLC. This tool is not affiliated with or endorsed by Wizards of the Coast LLC.
 
-## Create Database and Table
+Acknowledgement
+The D&D Character Generator was created by Daniel Holt. Special thanks to Prime Digital Academy who equipped and helped me to make this application a reality.
 
-Create a new database called `prime_app` and create a `user` table:
+Built With
+JS
+CSS
+HTML
+Nodejs
+Express
+React
+Redux
+Heroku
+Material-UI
+PostgreSQL
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`.
+Support
+If you have suggestion or issues, please email me at holt.daniel.b@gmail.com
 
-## Development Setup Instructions
-
-- Run `npm install`.
-    - Be sure to take stock of `package.json` to see which dependencies you'll need to add.
-- Create a `.env` file at the root of the project and paste this line into the file:
-
-```plaintext
-SERVER_SESSION_SECRET=superDuperSecret
-```
-
-While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [Password Generator Plus](https://passwordsgenerator.net). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-
-- Start postgres if not running already by using opening up the [Postgres.app](https://postgresapp.com), or if using [Homebrew](https://brew.sh) you can use the command `brew services start postgresql`.
-- Run `npm run server` to start the server.
-- Run `npm run client` to start the client.
-- Navigate to `localhost:5173`.
-
-## Debugging
-
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
-
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
-
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
-
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
-
-## Testing Routes with Postman
-
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
-
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
-
-1. Run `npm run server` to start the server.
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password.
-   2. `POST /api/user/login` will login a user, see body to change username/password.
-   3. `GET /api/user` will get user information, by default it's not very much.
-
-After running the login route above, you can try any other route you've created that requires a logged in user!
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using opening up the [Postgres.app](https://postgresapp.com), or if using [Homebrew](https://brew.sh) you can use the command `brew services start postgresql`.
-- Run `npm start`.
-- Navigate to `localhost:5173`.
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
-
-Directory Structure:
-
-- `src/` contains the React application.
-- `public/` contains static assets for the client-side.
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site.
-- `server/` contains the Express App.
-
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project.
-1. Link the Heroku project to the project GitHub Repo.
-1. Create an Heroku Postgres database.
-1. Connect to the Heroku Postgres database from Postico.
-1. Create the necessary tables.
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security.
-1. In the deploy section, select manual deploy.
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2.
