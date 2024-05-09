@@ -22,6 +22,8 @@ function Overview() {
   const history = useHistory();
 
   //TO DO: insert the projects db info into the table
+  //TO DO: need to attach each projects id to the action menu
+  // so it can update the status of the appropriate one in the DB
 
   const displayProject = (projectDisplay) => {
     console.log(projectDisplay);
