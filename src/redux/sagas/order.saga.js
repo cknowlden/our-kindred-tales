@@ -33,7 +33,7 @@ function* submitOrder(action) {
     //TODO: need to pull project info from DB in order to populate the data object below.
     //TODO: need to return the luluAPI ID from the post route, and insert it into the DB.
     const data = {
-      //required
+      //required will have a manual entry for email
       contact_email: "test@test.com",
       external_id: "demo-time",
       //required
@@ -56,7 +56,7 @@ function* submitOrder(action) {
         },
       ],
       production_delay: 120,
-      //required
+      //required will have a manual entry
       shipping_address: {
         city: "Lübeck",
         country_code: "GB",
@@ -66,7 +66,7 @@ function* submitOrder(action) {
         state_code: "",
         street1: "Holstenstr. 48",
       },
-      //required
+      //required, will have a manual entry
       shipping_level: "MAIL",
     };
     yield;
