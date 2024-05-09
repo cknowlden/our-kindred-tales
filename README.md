@@ -50,4 +50,3 @@ PostgreSQL
 
 Support
 If you have suggestion or issues, please email me at holt.daniel.b@gmail.com
-
