@@ -4,7 +4,6 @@ import { put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 const luluKey = import.meta.env.VITE_LULU_KEY;
 
-// worker Saga: will be fired on "ORDER" actions
 function* submitOrder(action) {
   const url = "https://api.sandbox.lulu.com";
   const grantData = "grant_type=client_credentials";
@@ -31,6 +30,8 @@ function* submitOrder(action) {
         console.error("Error:", error);
       });
     // Send order to lulu
+    //TODO: need to pull project info from DB in order to populate the data object below.
+    //TODO: need to return the luluAPI ID from the post route, and insert it into the DB.
     const data = {
       //required
       contact_email: "test@test.com",
