@@ -22,6 +22,7 @@ import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
+import TestWait from '../TestWait/TestWait';
 
 import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
 
@@ -91,6 +92,10 @@ function App() {
 
           <ProtectedRoute exact path="/test-render">
             <TestRender />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/test-wait">
+            <TestWait />
           </ProtectedRoute>
 
           <Route exact path="/login">

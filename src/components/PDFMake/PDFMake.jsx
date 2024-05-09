@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { useHistory } from 'react-router-dom';
 
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -11,6 +12,7 @@ pdfmake.defaultFont = 'Roboto';
 
 function PDFMake({ jsonData }) {
   // Declare metadata state
+  const history = useHistory();
   const [metadata, setMetadata] = useState(null);
   const [data, setData] = useState(null);
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ function PDFMake({ jsonData }) {
     footer: (currentPage, pageCount) => {
       dispatch({
         type: 'CHANGE_PAGECOUNT',
-        payload: { pcount: pageCount, detailId: projects[0].id },
+        payload: { pcount: pageCount, detailId: projects.id },
       });
       return {
         text: `Page ${currentPage} of ${pageCount}`,
@@ -144,6 +146,8 @@ function PDFMake({ jsonData }) {
   //opens pdf in a new tab
   pdfDoc.open();
   pdfDoc.download(`${metadata.bookTitle}`); // Download the generated PDF
+
+  history.push('/overview');
 
   return null; // Placeholder return statement
 }
