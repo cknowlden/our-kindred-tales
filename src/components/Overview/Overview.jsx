@@ -22,9 +22,7 @@ function Overview() {
   const history = useHistory();
 
   const eventDetails = useSelector((store) => store.details);
-  // const details = eventDetails[0] || 'No details available';
   const time = projects[0] || 'unavailable';
-  // const date = new Date(details.date);
   const date = new Date(time.last_updated);
   const formattedDate = date.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -81,7 +79,7 @@ function Overview() {
               <TableCell align="right">Contact</TableCell>
               <TableCell align="right">Last Updated</TableCell>
               <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="right"></TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
