@@ -50,7 +50,7 @@ function* submitOrder(action) {
             },
             pod_package_id: "0600X0900BWSTDPB060UW444MXX",
           },
-          quantity: 30,
+          quantity: 1,
           title: "My Book",
         },
       ],
