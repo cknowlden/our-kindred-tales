@@ -13,15 +13,17 @@ CREATE TABLE "project_list" (
 	"last_updated" TIMESTAMP,
 	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
-	"action" VARCHAR (150),
 	"user_id" INT,
 	"lulu_id" BIGINT
 );
 
 INSERT INTO "project_list" ("project_id", "project_name", "last_updated", "contact", "status")
-	VALUES 
-		(1, 'Footprints Through the Journey of My Life', '2024-04-24', 'evie89@gmail.com', 'ready for client review'),
-		(2, 'Adventures with Grandma', '2024-03-21', 'Gertrude75@hotmail.com', 'sent to publisher');
+	VALUES
+		(1, 'Footprints Through the Journey of My Life', '2024-05-02', 'evie89@gmail.com', 'ready for client review'),
+		(2, 'Adventures with Grandma', '2024-05-4', 'Gertrude75@hotmail.com', 'sent to publisher'),
+		(3, 'My Golden Years', '2024-05-07', 'charles.smith@yahoo.com', 'ready to send to publisher'),
+		(4, 'Life in the Pines', '2024-05-08', 'toddrhertz55@gmail.com', 'client has review and approved'),
+		(5, 'Throughout the Decades', '2024-05-08', 'bernice33@protonmail.com', 'ready for client review');
 
 
 CREATE TABLE "project_details" (
@@ -46,12 +48,4 @@ CREATE TABLE "project_details" (
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
 	VALUES 
 		('Footprints Through the Journey of My Life', 'Evelyn Graham', 'https://picsum.photos/200/300', FALSE, 3, TRUE, 100, 1, 1, 2, 2, TRUE, '1700541671277x948515555305848800_interior', 'https://app.kindredtales.net/version-test/'),
-		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info');
-
-CREATE TABLE "status" (
-	"customer_review" BOOLEAN,
-	"exceeds_page_limit" BIGINT,
-	"sent_to_publisher" BOOLEAN,
-	"ready_for_admin_review" BOOLEAN,
-	"completed" BOOLEAN
-);
+		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info'); 
