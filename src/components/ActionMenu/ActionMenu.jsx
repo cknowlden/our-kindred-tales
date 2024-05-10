@@ -1,16 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu() {
+function ActionMenu({ id }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useHistory();
+  const projects = useSelector((store) => store.projects);
 
   // const project = useSelector((store) => store.projects);
 
@@ -19,6 +21,15 @@ function ActionMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleReview = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: 'SET_PROJECTS_ID',
+      payload: event.target.id,
+    });
+    history.push('/new-test');
   };
 
   // const displayProject = (projectDisplay) => {
@@ -47,7 +58,9 @@ function ActionMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Send to client for review</MenuItem>
+        <MenuItem onClick={handleReview} id={id}>
+          Send to client for review
+        </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
