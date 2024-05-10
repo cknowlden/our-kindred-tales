@@ -9,9 +9,11 @@ function Nav() {
 
   return (
     <div className="nav">
+      <img src={'/feather.png'} className="icon" />
       <Link to="/home">
-        <h2 className="nav-title">Our Kindred Tales</h2>
+        <h2 className="nav-title">Kindred Tales</h2>
       </Link>
+
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
@@ -32,9 +34,6 @@ function Nav() {
               Overview
             </Link>
 
-            <Link className="navLink" to="/new-test">
-              Create New Test
-            </Link>
             <LogOutButton className="navLink" />
           </>
         )}
