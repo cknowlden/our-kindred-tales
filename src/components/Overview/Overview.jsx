@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ActionMenu from "../ActionMenu/ActionMenu";
-import Swal from "sweetalert2";
-import { IconButton } from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ActionMenu from '../ActionMenu/ActionMenu';
+import Swal from 'sweetalert2';
+import { IconButton } from '@mui/material';
 
-import "../App/App.css";
+import '../App/App.css';
 
 function Overview() {
   const projects = useSelector((store) => store.projects);
@@ -27,14 +27,14 @@ function Overview() {
 
   const displayProject = (projectDisplay) => {
     console.log(projectDisplay);
-    dispatch({ type: "SET_PROJECT_DETAILS", payload: projectDisplay });
+    dispatch({ type: 'SET_PROJECT_DETAILS', payload: projectDisplay });
     history.push(`/details/${projectDisplay.id}`);
   };
 
   const handleDelete = (event) => {
     console.log(event.target.id);
     dispatch({
-      type: "DELETE_PROJECT",
+      type: 'DELETE_PROJECT',
       payload: {
         targetId: event.target.id,
       },
@@ -44,21 +44,21 @@ function Overview() {
   const showConfirmationDelete = (event) => {
     event.preventDefault();
     Swal.fire({
-      text: "Are you sure you want to delete this event?",
-      icon: "warning",
+      text: 'Are you sure you want to delete this event?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("The event has been deleted").then(() => handleDelete(event));
+        Swal.fire('The event has been deleted').then(() => handleDelete(event));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
   };
 
   useEffect(() => {
-    dispatch({ type: "FETCH_PROJECTS" });
+    dispatch({ type: 'FETCH_PROJECTS' });
   }, []);
 
   return (
@@ -71,6 +71,7 @@ function Overview() {
               <TableCell align="right">Contact</TableCell>
               <TableCell align="right">Last Updated</TableCell>
               <TableCell align="right">Status</TableCell>
+              <TableCell align="right">Page Count</TableCell>
               <TableCell align="right">Actions</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
@@ -80,7 +81,7 @@ function Overview() {
             {projects.map((project) => (
               <TableRow
                 key={projects.contact}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell
                   className="tr"
@@ -93,6 +94,7 @@ function Overview() {
                 <TableCell align="right">{project.contact}</TableCell>
                 <TableCell align="right">{project.last_updated}</TableCell>
                 <TableCell align="right">{project.status}</TableCell>
+                <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
                   <ActionMenu />
                 </TableCell>

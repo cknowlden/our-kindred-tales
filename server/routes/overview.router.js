@@ -5,7 +5,8 @@ const router = express.Router();
 //pulls the project info from db
 router.get('/', (req, res) => {
   const queryText = `
-  SELECT * FROM "project_list";
+  SELECT * FROM "project_list"		
+JOIN "project_details" ON "project_details".id = "project_list".project_id;
   `;
   pool
     .query(queryText)
