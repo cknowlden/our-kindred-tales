@@ -5,7 +5,7 @@ const router = express.Router();
 //pulls the project info from db
 
 router.put('/', (req, res) => {
-  console.log(req.body.pcount);
+  console.log(req.body);
 
   const putQuery = `UPDATE "project_details"
   SET "page_count" = $1

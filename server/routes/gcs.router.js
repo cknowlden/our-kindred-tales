@@ -12,6 +12,46 @@ const storage = new Storage({
   keyFilename: process.env.SERVICE_ACCOUNT_KEY_PATH, //This is using the client key etc. from .env file
 });
 
+// GET route to fetch all JSON files from GCS to display on Overview page
+// Don't forget to install npm install @google-cloud/storage
+router.get('/files/JSON', async (req, res) => {
+  try {
+    // The folder pathway in GCS where JSON files are located
+    const folderPath = 'json-files/';
+
+    // Get the files from the GCS bucket at /json-files
+    const [files] = await storage.bucket('example-kindred-tales').getFiles({
+      prefix: folderPath,
+    });
+
+    const jsonFilesMetadata = [];
+
+    for (const file of files) {
+      // Read the content of the file
+      const data = await file.download();
+
+      // Parse JSON to string
+      const jsonString = data[0].toString();
+
+      const content = JSON.parse(jsonString);
+
+      // Push metadata to the array
+      if (content && content.metadata && content.metadata.pdfFileId) {
+        jsonFilesMetadata.push({
+          pdfFileId: content.metadata.pdfFileId,
+          fileName: file.name,
+          metadata: content.metadata,
+        });
+      }
+    }
+
+    return res.json(jsonFilesMetadata);
+  } catch (error) {
+    console.error('Error fetching JSON files:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // // GET route to fetch JSON files from Google Cloud Storage
 // // don't forget to install npm install @google-cloud/storage
 router.get('/files/JSON/:pdfFileId', async (req, res) => {
@@ -76,6 +116,65 @@ router.get('/files/JSON/:pdfFileId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching PDF file:', error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// WORKING POST route to upload JSON data to Google Cloud Storage
+// Was used for JSON testing form. Unsure if will use with final App.
+router.post('/uploadJson', async (req, res) => {
+  try {
+    const jsonData = req.body;
+    const jsonString = JSON.stringify(jsonData);
+
+    // Define destination file path in GCS
+    const destinationFilePath = 'json-files/data.json';
+
+    // Upload JSON data to GCS
+    await storage
+      .bucket('example-kindred-tales')
+      .file(destinationFilePath)
+      .save(jsonString);
+
+    res.json({ message: 'JSON data uploaded to GCS successfully' });
+  } catch (error) {
+    console.error('Error uploading JSON data to GCS:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// POST route to send completed PDFMake PDF to Google Cloud Storage
+// ** Remember to npm install multer (middleware for uploading the pdf)
+router.post('/uploadPDF', upload.single('pdfData'), async (req, res) => {
+  try {
+    // Gets PDF using Multer Middleware. Buffer (aka temporary storage) contains raw binary data of PDF.
+    const fileBuffer = req.file.buffer;
+
+    // Extract book title and author from PDF data so that it can be stored on GCS by Title and Author
+    const bookTitle = req.body.bookTitle;
+    const author = req.body.author;
+
+    // Check if book title and author are provided
+    if (!bookTitle || !author) {
+      console.error('Book title or author is missing in the request');
+      return res.status(400).send('Book title or author is missing');
+    }
+
+    // GCS bucket name
+    const bucketName = 'example-kindred-tales';
+
+    // Create a file name using book title and author
+    const filename = `${bookTitle}_${author}.pdf`;
+
+    // Destination file path in GCS
+    const destinationFilePath = `pdf-files/${filename}`;
+
+    // Upload the file buffer to GCS bucket
+    await storage.bucket(bucketName).file(destinationFilePath).save(fileBuffer);
+
+    res.send('File uploaded successfully');
+  } catch (error) {
+    console.error('Error uploading file to GCS:', error);
+    res.status(500).send('Internal server error');
   }
 });
 
