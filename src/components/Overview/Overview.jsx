@@ -17,28 +17,46 @@ function Overview() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // const projectTime = projects[0] || 'Date unavailable';
+  // const date = new Date(projectTime.last_updated);
+  // const formattedDate = date.toLocaleDateString('en-US', {
+  //   year: 'numeric',
+  //   month: 'long',
+  //   day: 'numeric',
+  //   hour: 'numeric',
+  //   minute: 'numeric',
+  //   hour12: true,
+  // });
+
   const displayProject = (project) => {
     dispatch({ type: 'SET_PROJECT_DETAILS', payload: project });
     history.push(`/details/${project.id}`);
   };
 
-  const handleDelete = (projectId) => {
+  const handleDelete = (event) => {
+    console.log(event.target.id);
+    dispatch({
+      type: 'DELETE_PROJECT',
+      payload: {
+        targetId: event.target.id,
+      },
+    });
+  };
+
+  const showConfirmationDelete = (event) => {
+    event.preventDefault();
     Swal.fire({
-      text: 'Are you sure you want to delete this project?',
+      text: 'Are you sure you want to delete this event?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch({ type: 'DELETE_PROJECT', payload: projectId });
+        Swal.fire('The event has been deleted').then(() => handleDelete(event));
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
-  };
-
-  const showConfirmationDelete = (projectId) => {
-    event.preventDefault();
-    handleDelete(projectId);
   };
 
   useEffect(() => {
@@ -53,7 +71,7 @@ function Overview() {
             <TableRow>
               <TableCell>Project Name</TableCell>
               <TableCell align="right">Contact</TableCell>
-              <TableCell align="right">Last Updated</TableCell>
+              {/* <TableCell align="right">Last Updated</TableCell> */}
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Page Count</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -61,7 +79,10 @@ function Overview() {
           </TableHead>
           <TableBody>
             {projects.map((project) => (
-              <TableRow key={project.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={project.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell
                   className="tr"
                   onClick={() => displayProject(project)}
@@ -71,15 +92,20 @@ function Overview() {
                   {project.project_name || project.bookTitle}
                 </TableCell>
                 <TableCell align="right">{project.contact}</TableCell>
-                <TableCell align="right">{project.last_updated}</TableCell>
+                {/* <TableCell align="right">{formattedDate}</TableCell> */}
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
-                  <ActionMenu id={project.id} />
+                  <ActionMenu
+                    id={project.project_id}
+                    pdfid={project.pdfFileId}
+                  />
+                  {project.project_id},{project.pdfFileId}
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon
-                    onClick={() => showConfirmationDelete(project.id)}
+                    onClick={showConfirmationDelete}
+                    id={project.id}
                     aria-label="delete"
                     color="primary"
                     size="large"
