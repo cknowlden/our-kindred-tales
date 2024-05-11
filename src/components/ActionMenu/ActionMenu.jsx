@@ -23,7 +23,11 @@ function ActionMenu({ id }) {
     setAnchorEl(null);
   };
 
-  const handleReview = async () => {
+
+  const handleReview = async (event) => {
+    console.log('this id', id);
+
+
     try {
       // Fetch JSON data from GCS based on project ID
       const response = await axios.get(`/api/gcs/files/JSON/${id}`);

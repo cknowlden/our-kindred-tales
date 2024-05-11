@@ -96,16 +96,12 @@ function Overview() {
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
-                  <ActionMenu
-                    id={project.project_id}
-                    pdfid={project.pdfFileId}
-                  />
-                  {project.project_id},{project.pdfFileId}
+                  <ActionMenu pdfID={project.pdfFileId} />
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon
                     onClick={showConfirmationDelete}
-                    id={project.id}
+                    id={project.project_id}
                     aria-label="delete"
                     color="primary"
                     size="large"
