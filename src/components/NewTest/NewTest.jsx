@@ -26,12 +26,11 @@
 
 // export default NewTest;
 
-
-
 import React, { useState, useEffect } from 'react';
 import JSON from '../JSON/JSON';
 import PDFMake from '../PDFMake/PDFMake';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 function NewTest() {
   const [jsonDataState, setJsonDataState] = useState(null);
