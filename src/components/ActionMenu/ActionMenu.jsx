@@ -74,8 +74,6 @@
 
 // export default ActionMenu;
 
-
-
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -86,7 +84,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu({ id }) {
+function ActionMenu({ id, pdfid }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -100,10 +98,14 @@ function ActionMenu({ id }) {
     setAnchorEl(null);
   };
 
-  const handleReview = async () => {
+  const handleReview = async (event) => {
+    console.log('this id', id);
+    console.log('this pdfid', pdfid);
     try {
       // Fetch JSON data from GCS based on project ID
-      const response = await axios.get(`/api/gcs/files/JSON/${id}`);
+      const response = await axios.get(
+        `/api/gcs/files/JSON/${event.target.id}`
+      );
       const jsonData = response.data;
 
       // Generate PDF
@@ -115,10 +117,10 @@ function ActionMenu({ id }) {
       console.log('PDF generated and uploaded successfully.');
 
       // Redirect to '/new-test'
-      history.push('/new-test');
     } catch (error) {
       console.error('Error:', error);
     }
+    history.push('/new-test');
   };
 
   const generatePDF = async (jsonData) => {
@@ -150,7 +152,7 @@ function ActionMenu({ id }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleReview} id={id}>
+        <MenuItem onClick={handleReview} id={id} pdfid={pdfid}>
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>

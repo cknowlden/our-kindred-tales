@@ -22,23 +22,30 @@ function Overview() {
     history.push(`/details/${project.id}`);
   };
 
-  const handleDelete = (projectId) => {
+  const handleDelete = (event) => {
+    console.log(event.target.id);
+    dispatch({
+      type: 'DELETE_PROJECT',
+      payload: {
+        targetId: event.target.id,
+      },
+    });
+  };
+
+  const showConfirmationDelete = (event) => {
+    event.preventDefault();
     Swal.fire({
-      text: 'Are you sure you want to delete this project?',
+      text: 'Are you sure you want to delete this event?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch({ type: 'DELETE_PROJECT', payload: projectId });
+        Swal.fire('The event has been deleted').then(() => handleDelete(event));
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
-  };
-
-  const showConfirmationDelete = (projectId) => {
-    event.preventDefault();
-    handleDelete(projectId);
   };
 
   useEffect(() => {
@@ -61,7 +68,10 @@ function Overview() {
           </TableHead>
           <TableBody>
             {projects.map((project) => (
-              <TableRow key={project.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={project.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell
                   className="tr"
                   onClick={() => displayProject(project)}
@@ -75,11 +85,16 @@ function Overview() {
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
-                  <ActionMenu id={project.id} />
+                  <ActionMenu
+                    id={project.project_id}
+                    pdfid={project.pdfFileId}
+                  />
+                  {project.project_id},{project.pdfFileId}
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon
-                    onClick={() => showConfirmationDelete(project.id)}
+                    onClick={showConfirmationDelete}
+                    id={project.id}
                     aria-label="delete"
                     color="primary"
                     size="large"
