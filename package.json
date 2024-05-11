@@ -19,13 +19,6 @@
     "env": "^0.0.2",
     "express": "^4.17.1",
     "google-auth-library": "^9.9.0",
-<<<<<<< HEAD
-=======
-
-    "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.8.2",
-
->>>>>>> 2c2f702403759e2f906e94ed7ae18f20eadad7f8
     "multer": "^1.4.5-lts.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
