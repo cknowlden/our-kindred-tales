@@ -154,6 +154,7 @@ function ActionMenu({ id }) {
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
+        <MenuItem onClick={handleClose}><Link to="/customer-info"><p>Add Customer Details</p></Link></MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
             Send to Publisher
