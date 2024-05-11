@@ -82,7 +82,13 @@ function PDFMake({ jsonData }) {
     // },
 
     // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-    pageMargins: [40, 60, 40, 60],
+    pageMargins: function (currentPage) {
+      const isEvenPage = currentPage % 2 === 0;
+      const leftMargin = isEvenPage ? 60 : 40;
+      const rightMargin = isEvenPage ? 40 : 60;
+      return [leftMargin, 60, rightMargin, 60]; // Adjust top and bottom margins as needed
+    },
+  
     defaultStyle: {
       font: 'merriweather',
     },
