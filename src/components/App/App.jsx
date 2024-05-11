@@ -22,6 +22,7 @@ import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
+import CustomerInfo from '../CustomerInfo/CustomerInfo';
 
 import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
 
@@ -87,6 +88,10 @@ function App() {
           <ProtectedRoute exact path="/new-test">
             <NewTest />
           </ProtectedRoute>
+          
+          <ProtectedRoute exact path="/customer-info">
+            <CustomerInfo />
+          </ProtectedRoute>
 
           <Route exact path="/login">
             {user.id ? (
@@ -120,10 +125,6 @@ function App() {
               <LandingPage />
             )}
           </Route>
-          <Route exact path="/orderform">
-            <SubmitOrderForm />
-          </Route>
-
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>

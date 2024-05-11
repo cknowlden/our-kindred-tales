@@ -17,6 +17,7 @@ function Overview() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
   const projectTime = projects[0] || 'Date unavailable';
   const date = new Date(projectTime.last_updated);
   const formattedDate = date.toLocaleDateString('en-US', {
@@ -27,6 +28,7 @@ function Overview() {
     minute: 'numeric',
     hour12: true,
   });
+
 
   const displayProject = (project) => {
     dispatch({ type: 'SET_PROJECT_DETAILS', payload: project });
