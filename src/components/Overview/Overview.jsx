@@ -61,7 +61,10 @@ function Overview() {
           </TableHead>
           <TableBody>
             {projects.map((project) => (
-              <TableRow key={project.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow
+                key={project.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
                 <TableCell
                   className="tr"
                   onClick={() => displayProject(project)}
