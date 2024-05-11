@@ -79,4 +79,45 @@ router.get("/files/JSON/:pdfFileId", async (req, res) => {
   }
 });
 
+
+
+
+// POST route to send completed PDFMake PDF to Google Cloud Storage
+// ** Remember to npm install multer (middleware for uploading the pdf)
+router.post('/uploadPDF', upload.single('pdfData'), async (req, res) => {
+  try {
+      // Gets PDF using Multer Middleware. Buffer (aka temporary storage) contains raw binary data of PDF.
+      const fileBuffer = req.file.buffer;
+
+      // Extract book title and author from PDF data so that it can be stored on GCS by Title and Author
+      const bookTitle = req.body.bookTitle;
+      const author = req.body.author;
+
+      // Check if book title and author are provided
+      if (!bookTitle || !author) {
+          console.error('Book title or author is missing in the request');
+          return res.status(400).send('Book title or author is missing');
+      }
+
+      // GCS bucket name
+      const bucketName = 'example-kindred-tales';
+
+      // Create a file name using book title and author
+      const filename = `${bookTitle}_${author}.pdf`;
+
+      // Destination file path in GCS
+      const destinationFilePath = `pdf-files/${filename}`;
+
+      // Upload the file buffer to GCS bucket
+      await storage.bucket(bucketName).file(destinationFilePath).save(fileBuffer);
+
+      res.send('File uploaded successfully');
+  } catch (error) {
+      console.error('Error uploading file to GCS:', error);
+      res.status(500).send('Internal server error');
+  }
+});
+
+
+
 module.exports = router;
