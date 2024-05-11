@@ -21,9 +21,11 @@ function Overview() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const eventDetails = useSelector((store) => store.details);
-  const time = projects[0] || 'unavailable';
-  const date = new Date(time.last_updated);
+  // const eventDetails = useSelector((store) => store.details);
+  // const details = eventDetails[0] || 'No details available';
+  const projectTime = projects[0] || 'unavailable';
+  const date = new Date(projectTime.date);
+  // const date = new Date(details.date);
   const formattedDate = date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -99,7 +101,7 @@ function Overview() {
                   {project.project_name}
                 </TableCell>
                 <TableCell align="right">{project.contact}</TableCell>
-                <TableCell align="right">{project.last_updated}</TableCell>
+                <TableCell align="right">{formattedDate}</TableCell>
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">
                   <ActionMenu />
