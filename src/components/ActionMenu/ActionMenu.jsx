@@ -100,7 +100,7 @@ function ActionMenu({ id, pdfid }) {
 
   const handleReview = async (event) => {
     console.log('this id', id);
-    console.log('this pdfid', pdfid);
+
     try {
       // Fetch JSON data from GCS based on project ID
       const response = await axios.get(
@@ -152,7 +152,7 @@ function ActionMenu({ id, pdfid }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleReview} id={id} pdfid={pdfid}>
+        <MenuItem onClick={handleReview} id={id}>
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
