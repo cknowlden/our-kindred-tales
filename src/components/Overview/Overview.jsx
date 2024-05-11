@@ -17,6 +17,17 @@ function Overview() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // const projectTime = projects[0] || 'Date unavailable';
+  // const date = new Date(projectTime.last_updated);
+  // const formattedDate = date.toLocaleDateString('en-US', {
+  //   year: 'numeric',
+  //   month: 'long',
+  //   day: 'numeric',
+  //   hour: 'numeric',
+  //   minute: 'numeric',
+  //   hour12: true,
+  // });
+
   const displayProject = (project) => {
     dispatch({ type: 'SET_PROJECT_DETAILS', payload: project });
     history.push(`/details/${project.id}`);
@@ -60,7 +71,7 @@ function Overview() {
             <TableRow>
               <TableCell>Project Name</TableCell>
               <TableCell align="right">Contact</TableCell>
-              <TableCell align="right">Last Updated</TableCell>
+              {/* <TableCell align="right">Last Updated</TableCell> */}
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Page Count</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -81,7 +92,7 @@ function Overview() {
                   {project.project_name || project.bookTitle}
                 </TableCell>
                 <TableCell align="right">{project.contact}</TableCell>
-                <TableCell align="right">{project.last_updated}</TableCell>
+                {/* <TableCell align="right">{formattedDate}</TableCell> */}
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">

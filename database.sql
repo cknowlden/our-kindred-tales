@@ -53,6 +53,7 @@ INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", 
 
 
 
+
 --UPDATE DATABASE SO PROJECT LIST HAS SERIAL PRIMARY KEY FOR PROJECT_ID--
 
 DROP TABLE IF EXISTS project_list;

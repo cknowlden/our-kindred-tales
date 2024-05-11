@@ -1,39 +1,34 @@
-D&D Character Generator
+Kindred Tales PDF Generator
 
 Duration: 3 weeks
 
-Welcome to the D&D Character Generator! This tool is designed to help you quickly create unique and exciting characters for your Dungeons & Dragons adventures. Whether you're a seasoned player looking for inspiration or a Dungeon Master in need of NPCs, this generator has you covered.
+Welcome to the Kindred Tales PDF Generator, This tool is designed to help you quickly and with minimal input create both digital PDFs as well as PDFs formatted to be sent to the publisher Lulu.
 
-to see the fully functional site, please visit: https://cryptic-spire-50176-a27bdd8c1984.herokuapp.com/#/home
+to see the fully functional site, please visit: 
 
 Installation
-1.Create a database named character_generator
-2.The queries in database.sql are set up to create all required tables. The project is built on Postgres, so you will need to make sure you have that installed. I recommend using Postico to run those queries as that was what I used to create them.
-3.Open your editor of choice and run npm install
+1. Create a database named kindred-tales
+2. The queries in database.sql are set up to create all required tables. The project is built on Postgres, so you will need to make sure you have that installed. I recommend using Postico to run those queries as that was what I used to create them.
+3. Open your editor of choice and run npm install
 4. Run npm run server in your terminal
-5.Run npm run client in your terminal
+5. Run npm run client in your terminal
 
 Usage
-Select Race and Class: Choose the race and class for your character. The generator provides a list of options to choose from, including standard races like humans, elves, dwarves, and more, as well as a variety of classes such as fighter, wizard, rogue, and cleric.
-Choose Background: Select a background for your character to add depth and backstory. Background options include noble, criminal, acolyte, folk hero, and more. Each background provides specific skills, tools, and personality traits.
-background, and any additional details.
-Customize: Feel free to customize your character further by adding unique details, such as personality traits, ideals, bonds, and flaws. You can also choose equipment, spells, feats, and other features to tailor your character to your liking.
-Roll Ability Scores: Roll dice to determine your character's ability scores. You can roll for each ability individually or use a standard array if you prefer. The abilities include Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma.
-Generate Character: Once you've made your selections, click the "Generate Character" button to create your character. The generator will compile all the chosen options into a character sheet, complete with name, race, class, ability scores, 
-Save and Share: Save your character sheet for future reference or share it with your gaming group. You can also use the character sheet as a basis for creating character tokens or miniatures for your tabletop sessions.
+Upon load The app will reach out to your GCS database and pull any existing orders found there, You can then use the Drop down menu located on each item in the table and use the options there for each stage of the process.
 
 Features
-Random Generation: Quickly generate ability scores.
-Customization: Tailor your character by selecting specific race, class, background, and other details to suit your preferences.
-Character Sheet: View and print a detailed character sheet containing all the essential information about your character.
+automated generation of a clean digital copy of the PDF
+Allowing manual input of customer information to include, shipping address and phone number.
+Automated generation of a PDF set to publisher specifications and sending the the created PDF directly to the publisher for production.
+
 Feedback
-We are constantly striving to improve the D&D Character Generator to better serve the needs of players and Dungeon Masters alike. If you have any feedback, suggestions, or feature requests, please don't hesitate to contact us. Your input is invaluable in helping us enhance this tool for the D&D community.
+
 
 Disclaimer
-This generator is intended for personal use and entertainment purposes only. Dungeons & Dragons is a registered trademark of Wizards of the Coast LLC. This tool is not affiliated with or endorsed by Wizards of the Coast LLC.
 
-Acknowledgement
-The D&D Character Generator was created by Daniel Holt. Special thanks to Prime Digital Academy who equipped and helped me to make this application a reality.
+
+Acknowledgerment
+The Kindred Tales PDF Generator was created by a team of developers to include Ashleigh Carter, Cali Knowlden, Daniel Holt, Jan Michael A Biyo, LuAnn Yang, and Richard Barnitz. Special thanks to Prime Digital Academy who equipped and helped us to make this application a reality. And to Kindred Tales owner and founder Nick Hern for allowing us to work with him on such a fantastic product.
 
 Built With
 JS
@@ -46,6 +41,8 @@ Redux
 Heroku
 Material-UI
 PostgreSQL
+GCS
+PDFMake
 
 
 Support
