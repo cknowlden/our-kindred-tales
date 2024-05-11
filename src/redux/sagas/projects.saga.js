@@ -1,32 +1,3 @@
-// import axios from 'axios';
-// import { put, takeLatest } from 'redux-saga/effects';
-
-// // Worker saga will be fired on "FETCH_PROJECTS" actions
-// function* fetchProjects() {
-//   try {
-//     // Fetch data from GCS
-//     const response = yield axios.get('/api/overview/files/JSON');
-//     const projects = response.data;
-
-//     // Post data to local database
-//     yield axios.post('/api/overview/projects', projects);
-
-//     // Fetch updated projects from local database
-//     const projectsResponse = yield axios.get('/api/overview');
-//     yield put({ type: 'SET_PROJECTS', payload: projectsResponse.data });
-//   } catch (error) {
-//     console.error('Error fetching projects:', error);
-//   }
-// }
-
-// function* projectsSaga() {
-//   yield takeLatest('FETCH_PROJECTS', fetchProjects);
-// }
-
-// export default projectsSaga;
-
-
-
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
