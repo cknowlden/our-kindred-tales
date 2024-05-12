@@ -12,10 +12,9 @@ function JSON({ onSubmit }) {
 
   return (
     <div>
-      <p>Input your JSON file here</p>
       <br />
       <center>
-        <form onSubmit={submitInput}>
+        {/* <form onSubmit={submitInput}>
           <textarea
             className="json-form"
             rows={25}
@@ -28,7 +27,7 @@ function JSON({ onSubmit }) {
           <div>
             <input className="btn" type="submit" />
           </div>
-        </form>
+        </form> */}
       </center>
     </div>
   );
