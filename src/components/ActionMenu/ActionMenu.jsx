@@ -47,7 +47,8 @@ function ActionMenu({ pdfID }) {
       });
 
       // Redirect to '/new-test'
-      history.push('/new-test');
+      // history.push('/new-test');
+      history.push('/confirmation');
     } catch (error) {
       console.error('Error:', error);
     }

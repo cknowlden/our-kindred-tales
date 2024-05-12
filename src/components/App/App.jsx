@@ -20,7 +20,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
-import NewTest from '../NewTest/NewTest';
+import Confirmation from '../Confirmation/Confirmation';
 import CustomerInfo from '../CustomerInfo/CustomerInfo';
 
 import './App.css';
@@ -74,8 +74,8 @@ function App() {
             <PrinterRender />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/new-test">
-            <NewTest />
+          <ProtectedRoute exact path="/confirmation">
+            <Confirmation />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/customer-info">
