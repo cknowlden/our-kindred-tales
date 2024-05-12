@@ -32,9 +32,8 @@ function NewTest() {
         />
       </center>
       <center>
-        <h1>
-          Your PDF has been generated. View in new tab or download folder.
-        </h1>
+        <h1>Your PDF has been generated.</h1>
+        <h2>View in new tab or download folder.</h2>
       </center>
       {jsonDataState && (
         <div>
