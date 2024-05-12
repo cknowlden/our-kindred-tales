@@ -13,6 +13,7 @@ function ActionMenu({ pdfID }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const history = useHistory();
+  const projects = useSelector((store) => store.projects);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +28,7 @@ function ActionMenu({ pdfID }) {
 
     try {
       // Fetch JSON data from GCS based on project ID
-      const response = await axios.get(`/api/gcs/files/JSON/${pdfID}`);
+      const response = await axios.get(`/api/gcs/files/JSON/${event.target.id}`);
       const jsonData = response.data;
 
       // Generate PDF
@@ -37,6 +38,11 @@ function ActionMenu({ pdfID }) {
       await uploadPDFToGCS(pdfData);
 
       console.log('PDF generated and uploaded successfully.');
+
+      dispatch({
+        type: 'SET_PDF_ID',
+        payload: {idpdf: event.target.id},
+      });
 
       // Redirect to '/new-test'
       history.push('/new-test');
@@ -74,7 +80,7 @@ function ActionMenu({ pdfID }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleReview} pdfID={pdfID}>
+        <MenuItem onClick={handleReview} id={pdfID}>
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>

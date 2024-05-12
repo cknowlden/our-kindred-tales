@@ -5,8 +5,9 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 function NewTest() {
+  const pdfID = useSelector((store) => store.pdfID);
   const [jsonDataState, setJsonDataState] = useState(null);
-  const filePdfId = '1700541671277x948515555305848800_interiorTest';
+  const filePdfId = pdfID;
 
   useEffect(() => {
     const fetchData = async () => {
