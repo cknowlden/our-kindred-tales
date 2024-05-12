@@ -78,7 +78,7 @@ function Overview() {
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
-                  <ActionMenu pdfID={project.pdfFileId} />
+                  <ActionMenu pdfID={project.project_id} />
                 </TableCell>
                 <TableCell align="right">
                   <DeleteOutlineIcon
