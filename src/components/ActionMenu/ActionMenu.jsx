@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -9,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu({ id }) {
+function ActionMenu({ pdfID }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -23,14 +22,12 @@ function ActionMenu({ id }) {
     setAnchorEl(null);
   };
 
-
   const handleReview = async (event) => {
-    console.log('this id', id);
-
+    console.log('this id', pdfID);
 
     try {
       // Fetch JSON data from GCS based on project ID
-      const response = await axios.get(`/api/gcs/files/JSON/${id}`);
+      const response = await axios.get(`/api/gcs/files/JSON/${pdfID}`);
       const jsonData = response.data;
 
       // Generate PDF
@@ -77,11 +74,15 @@ function ActionMenu({ id }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleReview} id={id}>
+        <MenuItem onClick={handleReview} pdfID={pdfID}>
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
-        <MenuItem onClick={handleClose}><Link to="/customer-info"><p>Add Customer Details</p></Link></MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/customer-info">
+            <p>Add Customer Details</p>
+          </Link>
+        </MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
             Send to Publisher
