@@ -1,227 +1,102 @@
- import React, { useState, useEffect } from 'react';
- import { useDispatch, useSelector } from 'react-redux';
- import pdfmake from 'pdfmake/build/pdfmake';
- import pdfFonts from 'pdfmake/build/vfs_fonts';
+import React, { useState, useEffect } from 'react';
+import pdfmake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 
- // shortened book file for testing
- import testJSON from './testfile.json';
+// Import your test JSON file or replace it with the actual data source
+import testJSON from './testfile.json';
 
- // Initializing fonts
- pdfmake.vfs = pdfFonts.pdfMake.vfs;
+// Initializing fonts
+pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
- //creating preferred fonts for text and headers
- pdfMake.fonts = {
-   merriweather: {
-     normal: 'Merriweather-Regular.ttf',
-     bold: 'Merriweather-Regular.ttf',
-     italics: 'Merriweather-Regular.ttf',
-     bolditalics: 'Merriweather-Regular.ttf',
-   },
-   montserrat: {
-     normal: 'Montserrat-Regular.ttf',
-     bold: 'Montserrat-Bold.ttf',
-     italics: 'Montserrat-VariableFont_wght.ttf',
-     bolditalics: 'Montserrat-VariableFont_wght.ttf',
-   },
- };
- // Optional: Set Roboto as the default font
- pdfmake.defaultFont = 'merriweather';
+// Font configuration
+pdfmake.fonts = {
+  merriweather: {
+    normal: 'Merriweather-Regular.ttf',
+    bold: 'Merriweather-Regular.ttf',
+    italics: 'Merriweather-Regular.ttf',
+    bolditalics: 'Merriweather-Regular.ttf',
+  },
+  montserrat: {
+    normal: 'Montserrat-Regular.ttf',
+    bold: 'Montserrat-Bold.ttf',
+    italics: 'Montserrat-VariableFont_wght.ttf',
+    bolditalics: 'Montserrat-VariableFont_wght.ttf',
+  },
+};
+// Set default font
+pdfmake.defaultFont = 'merriweather';
 
- function PDFMake({ jsonData }) {
-   //altering code to accept testJSON file instead of jasonData imported through state:
+function PDFMake({ jsonData }) {
+  const [metadata, setMetadata] = useState(null);
+  const [data, setData] = useState(null);
 
-   // Declare metadata state
-   const [metadata, setMetadata] = useState(null);
-   const [data, setData] = useState(null);
-   //parsing test data
-   console.log('testJSON', testJSON);
+  useEffect(() => {
+    if (jsonData) {
+      // Parse JSON data
+      const parsedData = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
 
-   useEffect(() => {
-     if (jsonData) {
-       //This line is switching out the state data to instead use the testfile.json linked above
-       const data = testJSON;
-       //typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+      if (parsedData && parsedData.metadata) {
+        setMetadata(parsedData.metadata);
+        setData(parsedData);
+      }
+    }
+  }, [jsonData]);
 
-       // Check if metadata exists in parsed data
-       if (data && data.metadata) {
-         // Set metadata
-         setMetadata(data.metadata);
-         setData(data);
-       }
-     }
-   }, [jsonData]);
+  if (!metadata) {
+    return null;
+  }
 
-   // If metadata is not yet available, return null
-   if (!metadata) {
-     return null;
-   }
+  const documentDefinition = {
+    content: [],
+    // Define other properties like header, footer, pageMargins, etc.
 
-   // Document definition
-   const documentDefinition = {
-     content: [],
+    // Define your content here
+  };
 
-     header: function (currentPage) {
-       if (currentPage > 3) {
-         return {
-           font: 'merriweather',
-           fontSize: 10,
-           alignment: 'center',
-           margin: [0, 20, 0, 0],
-           text: currentPage % 2 ? metadata.author : metadata.bookTitle,
-         };
-       }
-       return null;
-     },
+  useEffect(() => {
+    // Fetch images and add them to the document
+    const fetchAndAddImages = async () => {
+      if (!data) return;
 
-     // header: {
-     //   text: metadata.author,
-     //   font: 'montserrat',
-     //   fontSize: 10,
-     //   alignment: 'center',
-     //   margin: [0, 20, 0, 0],
-     // },
+      const elementsWithImages = data.questions.flatMap(question =>
+        question.elements.filter(element => element.type === 'image')
+      );
 
-     // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-     pageMargins: [40, 60, 40, 60],
-     defaultStyle: {
-       font: 'merriweather',
-     },
-     pageSize: {
-       //page size is in 'points', where 1 inch = 72 points.
-       //will need to add other page sizes to accommodate gutters
-       width: 432,
-       height: 648,
-     },
+      for (const element of elementsWithImages) {
+        try {
+          const imageDataUrl = await fetchImageAsDataUrl(element.value);
+          documentDefinition.content.push({ image: imageDataUrl, width: 150, alignment: 'center', margin: [0, 10] });
+        } catch (error) {
+          console.error('Error fetching image:', error);
+        }
+      }
+    };
 
-     // Footer
-     footer: (currentPage, pageCount) => {
-       // Exclude page numbers from the first three pages
-       if (currentPage <= 2) {
-         return null; // Return null to exclude page number
-       } else {
-         // Adjust page number to start from 1 after the third page
-         const adjustedPageNumber = currentPage - 2;
+    fetchAndAddImages();
+  }, [data]);
 
-         return {
-           //text: `Page ${currentPage} of ${pageCount}`,
-           text: `${adjustedPageNumber} `,
-           alignment: 'center',
-           fontSize: 10,
-           margin: [0, 30, 0, 0],
-         };
-       }
-     },
-   };
+  const fetchImageAsDataUrl = async (imageUrl) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      throw error;
+    }
+  };
 
-   console.log(documentDefinition.pageCount);
+  // Create PDF
+  const pdfDoc = pdfmake.createPdf(documentDefinition);
+  pdfDoc.open();
+  pdfDoc.download(`${metadata.bookTitle}`); // Download the generated PDF
 
-   // Title page
-   const titlePage = {
-     text: metadata.bookTitle,
-     fontSize: 24,
-     font: 'montserrat',
-     bold: true,
-     alignment: 'center',
-     margin: [0, 100, 0, 0],
-   };
-   documentDefinition.content.push(titlePage);
+  return null;
+}
 
-   const authorTitle = {
-     text: metadata.author,
-     fontSize: 20,
-     font: 'montserrat',
-     bold: false,
-     alignment: 'center',
-     margin: [0, 20, 0, 0],
-   };
-   documentDefinition.content.push(authorTitle);
-   documentDefinition.content.push({ text: '', pageBreak: 'before' });
-
-   // Table of Contents
-   const tocTitle = {
-     text: 'Table of Contents',
-     fontSize: 18,
-     font: 'montserrat',
-     alignment: 'center',
-
-     bold: true,
-     margin: [0, 20, 0, 20], // Top margin
-   };
-   documentDefinition.content.push(tocTitle);
-
-   //create table of contents
-   const TOC = {
-     toc: {
-       // id: 'mainToc'  // optional
-     },
-   };
-   documentDefinition.content.push(TOC);
-   documentDefinition.content.push({ text: '', pageBreak: 'before' });
-
-   // variable chapter page numbers
-   const chapterPageNumbers = [];
-
-   // Iterate over each question in the JSON data to populate TOC and chapters
-   data.questions.forEach((question, index) => {
-     // Add page break before starting a new chapter
-     if (index !== 0) {
-       documentDefinition.content.push({ text: '', pageBreak: 'before' });
-     }
-
-     // Add ID for linking from TOC
-     const chapterId = `Chapter${index + 1}`;
-
-     const chapterTitle = {
-       text: question.title,
-       fontSize: 14,
-       alignment: 'center',
-       font: 'montserrat',
-       bold: false,
-       margin: [30, 20, 30, 0], // Bottom margin
-       id: chapterId, // Set ID for linking from TOC
-       tocItem: true,
-     };
-     documentDefinition.content.push(chapterTitle);
-
-     console.log(chapterTitle);
-
-     // Record the page number for the current chapter
-     chapterPageNumbers.push({ chapterId: chapterId, pageNumber: '?' });
-     console.log('chapter page numbers', chapterPageNumbers);
-
-     // Iterate over each element in the chapter
-     question.elements.forEach((element) => {
-       if (element.type === 'text') {
-         const textContent = {
-           text: element.value,
-           alignment: 'justify',
-           fontSize: 10.5,
-           margin: [30, 20, 30, 0], // Text margins
-         };
-         documentDefinition.content.push(textContent);
-       } else if (element.type === 'image') {
-         const imageContent = {
-           image: element.value,
-           width: 150, // Adjust the width as needed
-         };
-         documentDefinition.content.push(imageContent);
-       }
-     });
-
-     // Add spacing between chapters
-     documentDefinition.content.push({
-       text: '',
-       margin: [0, 0, 0, 20],
-     });
-   });
-
-   // Create PDF
-   var pdfDoc = pdfmake.createPdf(documentDefinition);
-   //opens pdf in a new tab
-   pdfDoc.open();
-   pdfDoc.download(`${metadata.bookTitle}`); // Download the generated PDF
-
-   return null; // Placeholder return statement
- }
-
- export default PDFMake;
+export default PDFMake;

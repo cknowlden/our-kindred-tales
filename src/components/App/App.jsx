@@ -23,8 +23,6 @@ import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
 import CustomerInfo from '../CustomerInfo/CustomerInfo';
 
-import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
-
 import './App.css';
 
 function App() {
