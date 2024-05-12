@@ -18,13 +18,10 @@ import Overview from '../Overview/Overview';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
 import CustomerInfo from '../CustomerInfo/CustomerInfo';
-
-import SubmitOrderForm from '../SubmitOrderForm/SubmitOrderForm';
 
 import './App.css';
 
@@ -63,14 +60,6 @@ function App() {
             path="/overview"
           >
             <Overview />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows Project Details else shows LoginPage
-            exact
-            path="/details/:projectId"
-          >
-            <Details />
           </ProtectedRoute>
 
           <ProtectedRoute
