@@ -5,6 +5,7 @@ import projects from './projects.reducer';
 import viewDetails from './projectDetails.reducer';
 import googleCloud from './gcs.reducer';
 import projectsID from './projectsID.reducer';
+import pdfID from './pdfID.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   viewDetails,
   googleCloud,
   projectsID,
+  pdfID,
 });
 
 export default rootReducer;
