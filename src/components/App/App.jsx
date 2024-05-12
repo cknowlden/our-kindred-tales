@@ -77,7 +77,7 @@ function App() {
           <ProtectedRoute exact path="/new-test">
             <NewTest />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/customer-info">
             <CustomerInfo />
           </ProtectedRoute>

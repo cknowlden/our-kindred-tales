@@ -16,7 +16,7 @@ function* fetchProjects() {
     const dbProjects = dbResponse.data;
 
     // Combine GCS and local database projects
-    const mergedProjects = [...gcsProjects, ...dbProjects];
+    const mergedProjects = [...dbProjects];
 
     // Dispatch action to update Redux store with merged projects
     yield put({ type: 'SET_PROJECTS', payload: mergedProjects });
