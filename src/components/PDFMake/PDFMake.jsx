@@ -59,13 +59,13 @@ function PDFMake({ jsonData }) {
             return null;
           },
         
-          /*  // Define alternating page margins
-        pageMargins: function (currentPage) {
-          const oddMargins = [40, 60, 40, 60]; // Left, Top, Right, Bottom
-          const evenMargins = [60, 40, 60, 40]; // Left, Top, Right, Bottom
-          return currentPage % 2 === 0 ? evenMargins : oddMargins;
-        },*/
-          
+           // Define alternating page margins
+        // pageMargins: function (currentPage) {
+        //   const oddMargins = [40, 60, 40, 60]; // Left, Top, Right, Bottom
+        //   const evenMargins = [60, 40, 60, 40]; // Left, Top, Right, Bottom
+        //   return currentPage % 2 === 0 ? evenMargins : oddMargins;
+        // },
+         // would run faster on server side 
           pageMargins: [40, 60, 40, 60],
           defaultStyle: {
             font: 'merriweather',
