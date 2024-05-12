@@ -58,14 +58,14 @@ function PDFMake({ jsonData }) {
             }
             return null;
           },
-          // header: {
-          //   text: metadata.author,
-          //   font: 'montserrat',
-          //   fontSize: 10,
-          //   alignment: 'center',
-          //   margin: [0, 20, 0, 0],
-          // },
-          // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
+        
+          /*  // Define alternating page margins
+        pageMargins: function (currentPage) {
+          const oddMargins = [40, 60, 40, 60]; // Left, Top, Right, Bottom
+          const evenMargins = [60, 40, 60, 40]; // Left, Top, Right, Bottom
+          return currentPage % 2 === 0 ? evenMargins : oddMargins;
+        },*/
+          
           pageMargins: [40, 60, 40, 60],
           defaultStyle: {
             font: 'merriweather',
