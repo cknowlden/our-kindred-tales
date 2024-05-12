@@ -18,7 +18,6 @@ import Overview from '../Overview/Overview';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import Details from '../Details/Details';
 import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import NewTest from '../NewTest/NewTest';
@@ -66,14 +65,6 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows Project Details else shows LoginPage
-            exact
-            path="/details/:projectId"
-          >
-            <Details />
-          </ProtectedRoute>
-
-          <ProtectedRoute
             //logged in shows the JSON input page, else shows LoginPage
             exact
             path="/json"
@@ -88,7 +79,7 @@ function App() {
           <ProtectedRoute exact path="/new-test">
             <NewTest />
           </ProtectedRoute>
-          
+
           <ProtectedRoute exact path="/customer-info">
             <CustomerInfo />
           </ProtectedRoute>
