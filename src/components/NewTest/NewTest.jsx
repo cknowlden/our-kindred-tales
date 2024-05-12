@@ -24,7 +24,7 @@ function NewTest() {
 
   return (
     <div>
-      <h1>Top section with editable table for project name and contact info</h1>
+      <h1>Your PDF has been generated. View in new tab or download folder.</h1>
       {jsonDataState && (
         <div>
           <JSON onSubmit={(data) => setJsonDataState(data)} />
