@@ -28,7 +28,9 @@ function ActionMenu({ pdfID }) {
 
     try {
       // Fetch JSON data from GCS based on project ID
-      const response = await axios.get(`/api/gcs/files/JSON/${event.target.id}`);
+      const response = await axios.get(
+        `/api/gcs/files/JSON/${event.target.id}`
+      );
       const jsonData = response.data;
 
       // Generate PDF
@@ -41,11 +43,12 @@ function ActionMenu({ pdfID }) {
 
       dispatch({
         type: 'SET_PDF_ID',
-        payload: {idpdf: event.target.id},
+        payload: { idpdf: event.target.id },
       });
 
       // Redirect to '/new-test'
-      history.push('/new-test');
+      // history.push('/new-test');
+      history.push('/confirmation');
     } catch (error) {
       console.error('Error:', error);
     }
