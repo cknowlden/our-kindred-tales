@@ -24,7 +24,17 @@ function NewTest() {
 
   return (
     <div>
-      <h1>Top section with editable table for project name and contact info</h1>
+      <center>
+        <img
+          src={'/public/checkmark.png'}
+          alt="Checkmark"
+          className="checkmark"
+        />
+      </center>
+      <center>
+        <h1>Your PDF has been generated.</h1>
+        <h2>View in new tab or download folder.</h2>
+      </center>
       {jsonDataState && (
         <div>
           <JSON onSubmit={(data) => setJsonDataState(data)} />
