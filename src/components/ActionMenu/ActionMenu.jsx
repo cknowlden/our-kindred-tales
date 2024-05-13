@@ -23,6 +23,11 @@ function ActionMenu({ pdfID }) {
     setAnchorEl(null);
   };
 
+  const handleAddCustomer = (event) => {
+    history.push("/customer-info");
+  };
+  
+
   const handleReview = async (event) => {
     console.log('this id', pdfID);
 
@@ -88,9 +93,7 @@ function ActionMenu({ pdfID }) {
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to="/customer-info">
-            <p>Add Customer Details</p>
-          </Link>
+            <p onClick={handleAddCustomer}>Add Customer Details</p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>

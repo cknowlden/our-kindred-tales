@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function CustomerInfo() {
   const dispatch = useDispatch();
+  const projectId = useSelector((store) => store.projectsID);
+  console.log("id:", projectId)
   let [customerToAdd, setCustomerToAdd] = useState({
     email: '',
     name: '',
@@ -12,6 +14,7 @@ function CustomerInfo() {
     state: '',
     post: 0,
     country: '',
+    id: projectId,
   });
 
   const handleEmailChange = (event) => {
@@ -71,7 +74,8 @@ function CustomerInfo() {
   };
   const addCustomer = () => {
     dispatch({ type: 'CUSTOMER_TO_ADD', payload: customerToAdd });
-    console.log(customerToAdd);
+    let customerInfo = customerToAdd;
+    console.log(customerInfo);
   };
 
   return (
