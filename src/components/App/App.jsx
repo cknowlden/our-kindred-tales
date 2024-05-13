@@ -22,6 +22,7 @@ import JSON from '../JSON/JSON';
 import PrinterRender from '../PrinterRender/PrinterRender';
 import Confirmation from '../Confirmation/Confirmation';
 import CustomerInfo from '../CustomerInfo/CustomerInfo';
+import LuluSubmit from '../LuluSubmit/LuluSubmit';
 
 import './App.css';
 
@@ -80,6 +81,10 @@ function App() {
 
           <ProtectedRoute exact path="/customer-info">
             <CustomerInfo />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/submit">
+            <LuluSubmit />
           </ProtectedRoute>
 
           <Route exact path="/login">

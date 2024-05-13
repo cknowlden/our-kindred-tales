@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function CustomerInfo() {
   const dispatch = useDispatch();
-  const projectId = useSelector((store) => store.projectsID);
   console.log("id:", projectId)
   let [customerToAdd, setCustomerToAdd] = useState({
-    email: '',
     name: '',
     phone: 0,
     street: '',
@@ -14,15 +12,7 @@ function CustomerInfo() {
     state: '',
     post: 0,
     country: '',
-    id: projectId,
   });
-
-  const handleEmailChange = (event) => {
-    setCustomerToAdd({
-      ...customerToAdd,
-      email: event.target.value,
-    })
-  };
 
   const handleNameChange = (event) => {
     setCustomerToAdd({
@@ -93,13 +83,6 @@ function CustomerInfo() {
             onChange={handlePhoneChange}
             placeholder="(000)000-0000"
             id="phone"
-          />
-          <br />
-          <label>Email:</label>
-          <input
-            onChange={handleEmailChange}
-            placeholder="Email"
-            id="email"
           />
           <br/>
           <label>Street:</label>
