@@ -98,7 +98,6 @@ function ActionMenu({ pdfID, projectID }) {
         <MenuItem onClick={handleReview} id={pdfID}>
           Send to client for review
         </MenuItem>
-        <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={handleAddCustomer}>Add Customer Details</p>
         </MenuItem>
