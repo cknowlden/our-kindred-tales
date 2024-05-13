@@ -13,62 +13,47 @@ const storage = new Storage({
 });
 
 // // GET route to fetch JSON files from Google Cloud Storage
+// Used when rendering pdf for each unique pdf from GCS
 // // don't forget to install npm install @google-cloud/storage
 router.get("/files/JSON/:pdfFileId", async (req, res) => {
   try {
-    //pdfFileID is unique JSON file identifier (found in each file's metadata)
     const pdfFileId = req.params.pdfFileId;
-    //the folder pathway in GCS where JSON files are located. Used below in getting GCS bucket''s JSON folder
     const folderPath = "json-files/";
 
-    // Get the files from the GCS bucket at /json-files
     const [files] = await storage.bucket("example-kindred-tales").getFiles({
       prefix: folderPath,
     });
 
-    // Find file that has the matching pdfFileID (from metadata)
-    const matchingFile = files.find(async (file) => {
-      // Read the content of the file
+    let matchingFile;
+    for (const file of files) {
       const data = await file.download();
-
-      // Parse JSON to string
       const jsonString = data[0].toString();
-
       const content = JSON.parse(jsonString);
 
-      const metadata = content.metadata;
-      // Check if metadata contains the pdfFileId
-      return metadata && metadata.pdfFileId === pdfFileId;
-    });
+      if (content.metadata && content.metadata.pdfFileId === pdfFileId) {
+        matchingFile = content;
+        break;
+      }
+    }
 
     if (!matchingFile) {
       return res.status(404).json({ message: "PDF file not found" });
     }
 
-    // Read the content of the file
-    const data = await matchingFile.download();
-
-    // Parse JSON to string
-    const content = JSON.parse(data[0].toString());
-
-    if (
-      !content.metadata ||
-      !content.metadata.pdfFileId ||
-      content.metadata.pdfFileId !== pdfFileId
-    ) {
+    if (!matchingFile.metadata || matchingFile.metadata.pdfFileId !== pdfFileId) {
       return res.status(400).json({ message: "Invalid PDF file" });
     }
 
-    if (content && content.questions && content.metadata) {
+    if (matchingFile.questions && matchingFile.metadata) {
       return res.json({
-        questions: content.questions.map((question) => ({
+        questions: matchingFile.questions.map((question) => ({
           title: question.title,
           elements: question.elements.map((element) => ({
             type: element.type,
             value: element.value || "",
           })),
         })),
-        metadata: content.metadata,
+        metadata: matchingFile.metadata,
       });
     } else {
       return res.status(400).json({ message: "Invalid JSON structure" });
