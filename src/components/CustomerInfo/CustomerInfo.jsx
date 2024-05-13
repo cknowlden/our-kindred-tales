@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function CustomerInfo() {
   const dispatch = useDispatch();
-  console.log("id:", projectId)
+  const projectsID = useSelector((store) => store.projectsID);
+  console.log('id:', projectsID);
   let [customerToAdd, setCustomerToAdd] = useState({
     name: '',
     phone: 0,
@@ -84,7 +85,7 @@ function CustomerInfo() {
             placeholder="(000)000-0000"
             id="phone"
           />
-          <br/>
+          <br />
           <label>Street:</label>
           <input
             onChange={handleStreetChange}

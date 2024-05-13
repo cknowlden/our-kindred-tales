@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
@@ -8,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu({ pdfID }) {
+function ActionMenu({ pdfID, projectID }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -24,13 +24,20 @@ function ActionMenu({ pdfID }) {
   };
 
   const handleAddCustomer = (event) => {
-    history.push("/customer-info");
+    dispatch({
+      type: 'SET_PROJECTS_ID',
+      payload: { projectID },
+    });
+    history.push('/customer-info');
   };
 
   const handleSubmitToLulu = (event) => {
-    history.push("/submit");
-  }
-  
+    dispatch({
+      type: 'SET_PROJECTS_ID',
+      payload: { projectID },
+    });
+    history.push('/submit');
+  };
 
   const handleReview = async (event) => {
     console.log('this id', pdfID);
@@ -55,8 +62,12 @@ function ActionMenu({ pdfID }) {
         payload: { idpdf: event.target.id },
       });
 
+      dispatch({
+        type: 'SET_PROJECTS_ID',
+        payload: { projectID },
+      });
+
       // Redirect to '/new-test'
-      // history.push('/new-test');
       history.push('/confirmation');
     } catch (error) {
       console.error('Error:', error);
@@ -95,12 +106,13 @@ function ActionMenu({ pdfID }) {
         <MenuItem onClick={handleReview} id={pdfID}>
           Send to client for review
         </MenuItem>
-        <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
-            <p onClick={handleAddCustomer}>Add Customer Details</p>
+          <p onClick={handleAddCustomer} id={projectID}>
+            Add Customer Details
+          </p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <p onClick={handleSubmitToLulu}>
+          <p onClick={handleSubmitToLulu} id={projectID}>
             Send to Publisher
           </p>
         </MenuItem>

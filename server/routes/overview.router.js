@@ -10,13 +10,9 @@ const storage = new Storage({
 //pulls the project info from db
 router.get('/', (req, res) => {
   const queryText = `
-
-  SELECT * FROM "project_list";
-  `;
-
-  //   SELECT "project_list".project_name, "project_list".project_id, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".page_count, "project_details".id FROM "project_list"
-  //   JOIN "project_details" ON "project_details".id = "project_list".project_id
-  //   GROUP BY "project_list".project_name, "project_list".project_id, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".page_count, "project_details".id;  `;
+    SELECT "project_list".project_name, "project_list".project_id, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".page_count, "project_details".id, "project_details".pdf_file_id FROM "project_list"
+    JOIN "project_details" ON "project_details".id = "project_list".project_id
+    GROUP BY "project_list".project_name, "project_list".project_id, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".page_count, "project_details".id, "project_details".pdf_file_id;  `;
 
   pool
     .query(queryText)
@@ -68,12 +64,10 @@ router.get('/files/JSON', async (req, res) => {
       projectDetailsToUpdate.push({ pdfFileId, bookTitle, author });
     }
 
-    res
-      .status(200)
-      .json({
-        message: 'Data retrieved successfully',
-        projects: projectDetailsToUpdate,
-      });
+    res.status(200).json({
+      message: 'Data retrieved successfully',
+      projects: projectDetailsToUpdate,
+    });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Internal server error' });

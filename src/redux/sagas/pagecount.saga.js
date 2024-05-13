@@ -7,7 +7,7 @@ function* updatePageCount(action) {
     yield axios({
       method: 'PUT',
       url: '/api/pdfmake',
-      data: [action.payload.pcount, action.payload.detailId],
+      data: [action.payload.pcount, action.payload.detailId.projectID],
     });
 
     yield put({
