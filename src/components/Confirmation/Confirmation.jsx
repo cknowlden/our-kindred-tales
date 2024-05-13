@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import JSON from '../JSON/JSON';
 import PDFMake from '../PDFMake/PDFMake';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function NewTest() {
   const pdfID = useSelector((store) => store.pdfID);
@@ -34,6 +35,12 @@ function NewTest() {
       <center>
         <h1>Your PDF has been generated.</h1>
         <h2>View in new tab or download folder.</h2>
+        <br />
+        <center>
+          <Link to="/overview">
+            <button className="btn">Go Back</button>
+          </Link>
+        </center>
       </center>
       {jsonDataState && (
         <div>

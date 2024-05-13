@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '@mui/material/Button';
@@ -24,13 +24,12 @@ function ActionMenu({ pdfID }) {
   };
 
   const handleAddCustomer = (event) => {
-    history.push("/customer-info");
+    history.push('/customer-info');
   };
 
   const handleSubmitToLulu = (event) => {
-    history.push("/submit");
-  }
-  
+    history.push('/submit');
+  };
 
   const handleReview = async (event) => {
     console.log('this id', pdfID);
@@ -56,7 +55,6 @@ function ActionMenu({ pdfID }) {
       });
 
       // Redirect to '/new-test'
-      // history.push('/new-test');
       history.push('/confirmation');
     } catch (error) {
       console.error('Error:', error);
@@ -97,12 +95,10 @@ function ActionMenu({ pdfID }) {
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
-            <p onClick={handleAddCustomer}>Add Customer Details</p>
+          <p onClick={handleAddCustomer}>Add Customer Details</p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <p onClick={handleSubmitToLulu}>
-            Send to Publisher
-          </p>
+          <p onClick={handleSubmitToLulu}>Send to Publisher</p>
         </MenuItem>
       </Menu>
     </div>
