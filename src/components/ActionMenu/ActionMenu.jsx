@@ -24,6 +24,10 @@ function ActionMenu({ pdfID, projectID }) {
   };
 
   const handleAddCustomer = (event) => {
+    dispatch({
+      type: 'SET_PROJECTS_ID',
+      payload: { projectID },
+    });
     history.push('/customer-info');
   };
 
@@ -99,10 +103,14 @@ function ActionMenu({ pdfID, projectID }) {
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <p onClick={handleAddCustomer}>Add Customer Details</p>
+          <p onClick={handleAddCustomer} id={projectID}>
+            Add Customer Details
+          </p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <p onClick={handleSubmitToLulu}>Send to Publisher</p>
+          <p onClick={handleSubmitToLulu} id={projectID}>
+            Send to Publisher
+          </p>
         </MenuItem>
       </Menu>
     </div>
