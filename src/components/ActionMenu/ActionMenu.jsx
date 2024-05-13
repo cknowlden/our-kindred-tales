@@ -32,6 +32,10 @@ function ActionMenu({ pdfID, projectID }) {
   };
 
   const handleSubmitToLulu = (event) => {
+    dispatch({
+      type: 'SET_PROJECTS_ID',
+      payload: { projectID },
+    });
     history.push('/submit');
   };
 
