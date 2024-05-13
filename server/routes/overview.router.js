@@ -121,4 +121,39 @@ router.post('/projects', async (req, res) => {
   }
 });
 
+router.put('/customer/:id', (req, res) => {
+  console.log('the project being updated', req.params);
+  console.log(req.params.id);
+  const { id } = req.params;
+
+  const { email, name, phone, street, city, state, post, country } = req.body; // Assuming data is coming from request body
+
+  const updateQuery = `
+    UPDATE project_lists 
+    SET 
+      email = $1,
+      name = $2,
+      phone = $3,
+      street = $4,
+      city = $5,  -- Fixed syntax: Added equal sign after city
+      state = $6,
+      post = $7,
+      country = $8
+    WHERE 
+      id = $9
+  `;
+
+  const values = [email, name, phone, street, city, state, post, country, id]; // Arrange parameters in order
+
+  pool
+    .query(updateQuery, values)
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error updating project', error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

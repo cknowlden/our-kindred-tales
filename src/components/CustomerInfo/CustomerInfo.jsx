@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 function CustomerInfo() {
   const dispatch = useDispatch();
   let [customerToAdd, setCustomerToAdd] = useState({
+    email: '',
     name: '',
     phone: 0,
     street: '',
@@ -12,6 +13,13 @@ function CustomerInfo() {
     post: 0,
     country: '',
   });
+
+  const handleEmailChange = (event) => {
+    setCustomerToAdd({
+      ...customerToAdd,
+      email: event.target.value,
+    })
+  };
 
   const handleNameChange = (event) => {
     setCustomerToAdd({
@@ -69,7 +77,7 @@ function CustomerInfo() {
   return (
     <div>
       <center>
-        <h1>Shipping Information</h1>
+        <h1>Customer Contact Information</h1>
       </center>
       <div className="form">
         <form>
@@ -83,6 +91,13 @@ function CustomerInfo() {
             id="phone"
           />
           <br />
+          <label>Email:</label>
+          <input
+            onChange={handleEmailChange}
+            placeholder="Email"
+            id="email"
+          />
+          <br/>
           <label>Street:</label>
           <input
             onChange={handleStreetChange}
