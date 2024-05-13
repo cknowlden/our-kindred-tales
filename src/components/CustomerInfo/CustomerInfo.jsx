@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function CustomerInfo() {
   const dispatch = useDispatch();
-  const projectId = useSelector((store) => store.projectsID);
   console.log("id:", projectId)
   let [customerToAdd, setCustomerToAdd] = useState({
     email: '',
@@ -14,7 +13,6 @@ function CustomerInfo() {
     state: '',
     post: 0,
     country: '',
-    id: projectId,
   });
 
   const handleEmailChange = (event) => {
