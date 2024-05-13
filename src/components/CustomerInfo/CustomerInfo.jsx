@@ -5,7 +5,6 @@ function CustomerInfo() {
   const dispatch = useDispatch();
   console.log("id:", projectId)
   let [customerToAdd, setCustomerToAdd] = useState({
-    email: '',
     name: '',
     phone: 0,
     street: '',
@@ -14,13 +13,6 @@ function CustomerInfo() {
     post: 0,
     country: '',
   });
-
-  const handleEmailChange = (event) => {
-    setCustomerToAdd({
-      ...customerToAdd,
-      email: event.target.value,
-    })
-  };
 
   const handleNameChange = (event) => {
     setCustomerToAdd({
@@ -91,13 +83,6 @@ function CustomerInfo() {
             onChange={handlePhoneChange}
             placeholder="(000)000-0000"
             id="phone"
-          />
-          <br />
-          <label>Email:</label>
-          <input
-            onChange={handleEmailChange}
-            placeholder="Email"
-            id="email"
           />
           <br/>
           <label>Street:</label>

@@ -26,6 +26,10 @@ function ActionMenu({ pdfID }) {
   const handleAddCustomer = (event) => {
     history.push("/customer-info");
   };
+
+  const handleSubmitToLulu = (event) => {
+    history.push("/submit");
+  }
   
 
   const handleReview = async (event) => {
@@ -96,7 +100,7 @@ function ActionMenu({ pdfID }) {
             <p onClick={handleAddCustomer}>Add Customer Details</p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
+          <p onClick={handleSubmitToLulu}>
             Send to Publisher
           </p>
         </MenuItem>
