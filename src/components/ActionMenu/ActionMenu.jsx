@@ -8,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu({ pdfID }) {
+function ActionMenu({ pdfID, projectID }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -52,6 +52,11 @@ function ActionMenu({ pdfID }) {
       dispatch({
         type: 'SET_PDF_ID',
         payload: { idpdf: event.target.id },
+      });
+
+      dispatch({
+        type: 'SET_PROJECTS_ID',
+        payload: { projectID },
       });
 
       // Redirect to '/new-test'

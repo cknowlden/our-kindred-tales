@@ -3,6 +3,7 @@ import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import axios from 'axios';
 import FormData from 'form-data';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Initializing fonts
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
@@ -26,10 +27,10 @@ pdfMake.fonts = {
 // Optional: Set Merriweather as the default font
 pdfmake.defaultFont = 'merriweather';
 
+//PDF MAKE - moving this functionality to the server side should speed up processing time when rendering PDF
 function PDFMake({ jsonData }) {
-  // Declare metadata state
-  const [metadata, setMetadata] = useState(null);
-  const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  const projectsID = useSelector((store) => store.projectsID);
 
   // Parsing test data
   useEffect(() => {
@@ -38,7 +39,8 @@ function PDFMake({ jsonData }) {
         if (!jsonData) return;
 
         // Parse jsonData since input from dispatch will be string
-        const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+        const data =
+          typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
 
         // Check if metadata exists in parsed data
         if (!data || !data.metadata) return;
@@ -72,6 +74,10 @@ function PDFMake({ jsonData }) {
           },
           // Footer
           footer: (currentPage, pageCount) => {
+            dispatch({
+              type: 'CHANGE_PAGECOUNT',
+              payload: { pcount: pageCount, detailId: projectsID },
+            });
             // Exclude page numbers from the first three pages
             if (currentPage <= 2) {
               return null; // Return null to exclude page number
@@ -169,7 +175,6 @@ function PDFMake({ jsonData }) {
             throw error;
           }
         };
-
 
         async function processElements(question) {
           for (const element of question.elements) {
