@@ -8,22 +8,15 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "project_list" (
-	"project_id" INT,
+	"project_id" SERIAL PRIMARY KEY,
 	"project_name" VARCHAR (255),
 	"last_updated" TIMESTAMP,
 	"contact" VARCHAR (255),
 	"status" VARCHAR (80),
 	"user_id" INT,
-	"lulu_id" BIGINT
+	"lulu_id" BIGINT, 
+	"pdf_file_id" VARCHAR(255)
 );
-
-INSERT INTO "project_list" ("project_id", "project_name", "last_updated", "contact", "status")
-	VALUES
-		(1, 'Footprints Through the Journey of My Life', '2024-05-02', 'evie89@gmail.com', 'ready for client review'),
-		(2, 'Adventures with Grandma', '2024-05-4', 'Gertrude75@hotmail.com', 'sent to publisher'),
-		(3, 'My Golden Years', '2024-05-07', 'charles.smith@yahoo.com', 'ready to send to publisher'),
-		(4, 'Life in the Pines', '2024-05-08', 'toddrhertz55@gmail.com', 'client has review and approved'),
-		(5, 'Throughout the Decades', '2024-05-08', 'bernice33@protonmail.com', 'ready for client review');
 
 
 CREATE TABLE "project_details" (
@@ -42,43 +35,28 @@ CREATE TABLE "project_details" (
 	"spine_width" INT,
 	"add_title_divider" BOOLEAN,
 	"pdf_file_id" VARCHAR,
-	"url" VARCHAR	
+	"url" VARCHAR
 );
 
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
-	VALUES 
+	VALUES
 		('Footprints Through the Journey of My Life', 'Evelyn Graham', 'https://picsum.photos/200/300', FALSE, 3, TRUE, 100, 1, 1, 2, 2, TRUE, '1700541671277x948515555305848800_interior', 'https://app.kindredtales.net/version-test/'),
 		('Adventures with Grandma', 'Selma March', 'https://picsum.photos/200/300', TRUE, 2, FALSE, 50, 1, 1, 2, 2, FALSE, '1445464654654654564x46548484654_interior', 'https://app.kindredtales.net/canned-info'); 
 
 
 
+UPDATE "project_list" SET "status" = 'ready for client review', "contact" = 'evie89@gmail.com' WHERE "project_name" = 'Footprints Through the Journey of My Life';
 
+UPDATE "project_list" SET "status" = 'sent to publisher', "contact" = 'g.brown785@hotmail.com' WHERE "project_name" = 'Traversing The Unknown';
 
---UPDATE DATABASE SO PROJECT LIST HAS SERIAL PRIMARY KEY FOR PROJECT_ID--
+UPDATE "project_list" SET "status" = 'client has review and approved', "contact" = 'oregondrummer88@gmail.com' WHERE "project_name" = 'Modern Oregon Trail';
 
-DROP TABLE IF EXISTS project_list;
+UPDATE "project_list" SET "status" = 'ready for client review', "contact" = 'barbara902@aol.com' WHERE "project_name" = 'Moments That Shaped Me';
 
+UPDATE "project_list" SET "status" = 'sent to publisher', "contact" = 'augustine_weather@gmail.com' WHERE "project_name" = 'For A Loving and Beautiful Family';
 
-CREATE TABLE "project_list" (
-    "project_id" INT,
-    "project_name" VARCHAR(255),
-    "last_updated" TIMESTAMP,
-    "contact" VARCHAR(255),
-    "status" VARCHAR(80),
-    "user_id" INT,
-    "lulu_id" BIGINT,
-    "pdf_file_id" VARCHAR(255)
-);
+UPDATE "project_list" SET "status" = 'sent to publisher', "contact" = 'eve_graham@gmail.com' WHERE "project_name" = 'TEST Footprints Through the Journey of My Life';
 
-
-
-INSERT INTO "project_list" ("project_id", "project_name", "last_updated", "contact", "status")
-	VALUES
-		(1, 'Footprints Through the Journey of My Life', '2024-05-02', 'evie89@gmail.com', 'ready for client review'),
-		(2, 'Adventures with Grandma', '2024-05-4', 'Gertrude75@hotmail.com', 'sent to publisher'),
-		(3, 'My Golden Years', '2024-05-07', 'charles.smith@yahoo.com', 'ready to send to publisher'),
-		(4, 'Life in the Pines', '2024-05-08', 'toddrhertz55@gmail.com', 'client has review and approved'),
-		(5, 'Throughout the Decades', '2024-05-08', 'bernice33@protonmail.com', 'ready for client review');
 
 
 
