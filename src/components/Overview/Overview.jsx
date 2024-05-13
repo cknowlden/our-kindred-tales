@@ -54,7 +54,7 @@ function Overview() {
           <TableHead>
             <TableRow>
               <TableCell>Project Name</TableCell>
-              <TableCell align="right">Contact</TableCell>
+              {/* <TableCell align="right">Contact</TableCell> */}
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Page Count</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -74,7 +74,7 @@ function Overview() {
                 >
                   {project.project_name || project.bookTitle}
                 </TableCell>
-                <TableCell align="right">{project.contact}</TableCell>
+                {/* <TableCell align="right">{project.contact}</TableCell> */}
                 <TableCell align="right">{project.status}</TableCell>
                 <TableCell align="right">{project.page_count}</TableCell>
                 <TableCell align="right">
