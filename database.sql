@@ -19,24 +19,27 @@ CREATE TABLE "project_list" (
 );
 
 
-CREATE TABLE "project_details" (
-	"id" SERIAL PRIMARY KEY,
-	"book_title" VARCHAR,
-	"author" VARCHAR (150),
-	"image_url" VARCHAR,
-	"pdf_only" BOOLEAN,
-	"gutter_margin" INT,
-	"full_bleed" BOOLEAN,
-	"content" VARCHAR,
-	"page_count" BIGINT,
-	"margin_add" INT,
-	"interior_margin" INT,
-	"fbinterior_margin" INT,
-	"spine_width" INT,
-	"add_title_divider" BOOLEAN,
+
+CREATE TABLE "project_list" (
+	"project_id" SERIAL PRIMARY KEY,
+	"project_name" VARCHAR (255),
+	"last_updated" TIMESTAMP,
+	"contact" VARCHAR (255),
+	"status" VARCHAR (80),
+	"user_id" INT,
+	"lulu_id" BIGINT,
 	"pdf_file_id" VARCHAR,
-	"url" VARCHAR
+    "email" VARCHAR,
+    "name" VARCHAR,
+    "phone" VARCHAR,
+    "street" VARCHAR,
+    "city" VARCHAR,
+    "state" VARCHAR,
+    "post" VARCHAR,
+    "country" VARCHAR
+	
 );
+
 
 INSERT INTO "project_details" ("book_title", "author", "image_url", "pdf_only", "gutter_margin", "full_bleed", "page_count", "margin_add", "interior_margin", "fbinterior_margin", "spine_width", "add_title_divider", "pdf_file_id", "url")
 	VALUES

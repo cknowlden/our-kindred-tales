@@ -1,8 +1,10 @@
-const customer = (state = {}, action) => {
-    if (action.type === 'CUSTOMER_TO_ADD') {
-      return action.payload;
+  const customer = (state = [], action) => {
+    switch (action.type) {
+      case 'CUSTOMER_TO_ADD':
+        return action.payload;
+      default:
+        return state;
     }
-    return state;
   };
 
   export default customer;
