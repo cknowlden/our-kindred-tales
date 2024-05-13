@@ -8,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function ActionMenu({ pdfID }) {
+function ActionMenu({ pdfID, projectID }) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -24,13 +24,12 @@ function ActionMenu({ pdfID }) {
   };
 
   const handleAddCustomer = (event) => {
-    history.push("/customer-info");
+    history.push('/customer-info');
   };
-  
 
   const handleReview = async (event) => {
     console.log('this id', pdfID);
-
+    console.log('this project id', projectID);
     try {
       // Fetch JSON data from GCS based on project ID
       const response = await axios.get(
@@ -49,6 +48,11 @@ function ActionMenu({ pdfID }) {
       dispatch({
         type: 'SET_PDF_ID',
         payload: { idpdf: event.target.id },
+      });
+
+      dispatch({
+        type: 'SET_PROJECTS_ID',
+        payload: { projectID },
       });
 
       // Redirect to '/new-test'
@@ -88,12 +92,12 @@ function ActionMenu({ pdfID }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleReview} id={pdfID}>
+        <MenuItem onClick={handleReview} id={pdfID} proid={projectID}>
           Send to client for review
         </MenuItem>
         <MenuItem onClick={handleClose}>Create printable PDF</MenuItem>
         <MenuItem onClick={handleClose}>
-            <p onClick={handleAddCustomer}>Add Customer Details</p>
+          <p onClick={handleAddCustomer}>Add Customer Details</p>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <p onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}>
