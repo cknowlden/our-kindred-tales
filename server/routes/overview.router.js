@@ -1,14 +1,14 @@
-const express = require("express");
-const pool = require("../modules/pool");
+const express = require('express');
+const pool = require('../modules/pool');
 const router = express.Router();
-const { Storage } = require("@google-cloud/storage");
+const { Storage } = require('@google-cloud/storage');
 
 const storage = new Storage({
   keyFilename: process.env.SERVICE_ACCOUNT_KEY_PATH, //This is using the client key etc. from .env file
 });
 
 //pulls the project info from db
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   const queryText = `
     SELECT "project_list".project_name, "project_list".project_id, "project_list".contact, "project_list".last_updated, "project_list".status, "project_details".page_count, "project_details".id, "project_details".pdf_file_id FROM "project_list"
     JOIN "project_details" ON "project_details".id = "project_list".project_id
@@ -20,14 +20,14 @@ router.get("/", (req, res) => {
       res.send(dbRes.rows);
     })
     .catch((dbErr) => {
-      console.log("error getting projects", dbErr);
+      console.log('error getting projects', dbErr);
       res.sendStatus(500);
     });
 });
 
-router.put("/order", (req, res) => {
+router.put('/order', (req, res) => {
   const order = req.body;
-  console.log("req body", req.body);
+  console.log('req body', req.body);
   const updateQuery = `
     UPDATE project_list
     SET
@@ -50,42 +50,41 @@ router.put("/order", (req, res) => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log("Error updating project", error);
+      console.log('Error updating project', error);
       res.sendStatus(500);
     });
 });
 
-router.get("/customer", (req, res) => {
-  const { id } = req.body; // Destructure id from req.body
+router.get('/customer:id', (req, res) => {
+  const id = req.params.id;
+  // console.log('this one please', req.body);
+  // const { id } = req.body; // Destructure id from req.body
   const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
 
   pool
     .query(queryText, [id])
-    .then((res) => {
-      res.send(res.rows);
+    .then((dbRes) => {
+      console.log("db response:",dbRes);
+      res.send(dbRes.rows);
     })
     .catch((dbErr) => {
-      console.log("Error getting project:", dbErr);
+      console.log('Error getting project:', dbErr);
       res.sendStatus(500);
     });
 });
 
-
-
-
-
 // Route to delete JSON files from GCS and from local database
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const projectId = req.params.id;
-    const folderPath = "json-files/"; //folder path to json/files on GCS to delete JSON from GCS
+    const folderPath = 'json-files/'; //folder path to json/files on GCS to delete JSON from GCS
 
     let files = [];
     let nextPageToken = null;
 
     // Paginate through files in the specified folder of the GCS bucket
     do {
-      const [result] = await storage.bucket("example-kindred-tales").getFiles({
+      const [result] = await storage.bucket('example-kindred-tales').getFiles({
         prefix: folderPath,
         pageToken: nextPageToken,
       });
@@ -95,17 +94,17 @@ router.delete("/:id", async (req, res) => {
       nextPageToken = result.nextPageToken;
     } while (nextPageToken);
 
-    console.log("Total JSON files found:", files.length);
+    console.log('Total JSON files found:', files.length);
 
     const projectPdfFileIdResult = await pool.query(
-      "SELECT pdf_file_id FROM project_list WHERE project_id = $1",
+      'SELECT pdf_file_id FROM project_list WHERE project_id = $1',
       [projectId]
     );
     const projectPdfFileId = projectPdfFileIdResult.rows[0]?.pdf_file_id;
 
     if (!projectPdfFileId) {
       console.log(
-        "PDF file ID not found in local database for projectId:",
+        'PDF file ID not found in local database for projectId:',
         projectId
       );
       return res.sendStatus(404);
@@ -129,7 +128,7 @@ router.delete("/:id", async (req, res) => {
         console.log(`Matching pdfFileId found for projectId ${projectId}`);
         // Delete file from GCS
         await file.delete();
-        console.log("JSON file deleted from GCS");
+        console.log('JSON file deleted from GCS');
 
         await pool.query(
           'DELETE FROM "project_details" WHERE "pdf_file_id" = $1',
@@ -141,27 +140,27 @@ router.delete("/:id", async (req, res) => {
         ]);
 
         console.log(
-          "Project details and file entry deleted from the local database"
+          'Project details and file entry deleted from the local database'
         );
 
         return res.sendStatus(200);
       }
     }
 
-    console.log("JSON file not found in GCS for projectId:", projectId);
+    console.log('JSON file not found in GCS for projectId:', projectId);
     return res.sendStatus(404);
   } catch (error) {
-    console.error("Error deleting JSON file:", error);
+    console.error('Error deleting JSON file:', error);
     return res.sendStatus(500);
   }
 });
 
 // Route to get data from GCS
-router.get("/files/JSON", async (req, res) => {
+router.get('/files/JSON', async (req, res) => {
   try {
-    const folderPath = "json-files/";
+    const folderPath = 'json-files/';
 
-    const [files] = await storage.bucket("example-kindred-tales").getFiles({
+    const [files] = await storage.bucket('example-kindred-tales').getFiles({
       prefix: folderPath,
     });
 
@@ -181,19 +180,20 @@ router.get("/files/JSON", async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Data retrieved successfully",
+      message: 'Data retrieved successfully',
       projects: projectDetailsToUpdate,
     });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 // POST gcs data to local database
-router.post("/projects", async (req, res) => {
+router.post('/projects', async (req, res) => {
   try {
     const projects = req.body.projects;
+    const projectStatus = 'New Project';
 
     for (const project of projects) {
       const { bookTitle, author, pdfFileId } = project;
@@ -204,7 +204,7 @@ router.post("/projects", async (req, res) => {
       );
 
       if (existingProject.rows.length === 0) {
-        await pool.query("BEGIN");
+        await pool.query('BEGIN');
 
         // Insert project details into project_details table
         await pool.query(
@@ -215,25 +215,26 @@ router.post("/projects", async (req, res) => {
 
         // Insert project name into project_list table
         await pool.query(
-          `INSERT INTO "project_list" (project_name, pdf_file_id)
-                  VALUES ($1, $2)`,
-          [bookTitle, pdfFileId]
+          `INSERT INTO "project_list" (project_name, pdf_file_id, status)
+                  VALUES ($1, $2, $3)`,
+          [bookTitle, pdfFileId, projectStatus]
         );
 
-        await pool.query("COMMIT");
+        await pool.query('COMMIT');
       }
     }
 
     res.sendStatus(201);
   } catch (error) {
-    console.error("Error adding projects:", error);
+    console.error('Error adding projects:', error);
     res.sendStatus(500);
   }
 });
 
-router.put("/customer", (req, res) => {
+router.put('/customer', (req, res) => {
   const order = req.body;
-  console.log("req body", req.body);
+  const status = "ready to publish"
+  console.log('req body', req.body);
   const updateQuery = `
     UPDATE project_list
     SET
@@ -243,9 +244,10 @@ router.put("/customer", (req, res) => {
       city = $4,
       state = $5,
       post = $6,
-      country = $7
+      country = $7,
+      status = $8
     WHERE
-      project_id = $8
+      project_id = $9
   `;
 
   const id = order.id;
@@ -258,6 +260,7 @@ router.put("/customer", (req, res) => {
     order.state,
     order.post,
     order.country,
+    status,
     id,
   ]; // Arrange parameters in order
 
@@ -267,9 +270,10 @@ router.put("/customer", (req, res) => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log("Error updating project", error);
+      console.log('Error updating project', error);
       res.sendStatus(500);
     });
 });
+
 
 module.exports = router;
