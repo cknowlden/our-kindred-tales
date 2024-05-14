@@ -10,6 +10,7 @@ import deleteSaga from './delete.saga';
 import pagecountSaga from './pagecount.saga';
 import customerInfoSaga from './customerinfo.saga';
 import initialpdfSaga from './initialPDF.saga';
+import publishpdfSaga from './publishpdf.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -30,5 +31,6 @@ export default function* rootSaga() {
     pagecountSaga(),
     customerInfoSaga(),
     initialpdfSaga(),
+    publishpdfSaga(),
   ]);
 }

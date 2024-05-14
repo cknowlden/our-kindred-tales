@@ -275,7 +275,25 @@ router.put('/firstpass', (req, res) => {
   const updateQuery = `
     UPDATE "project_list"
     SET status = 'Client Review'
-    WHERE "project_list".project_id = $1;`;
+    WHERE "project_list".project_id = $1`;
+
+  pool
+    .query(updateQuery, [req.body])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error updating project', error);
+      res.sendStatus(500);
+    });
+});
+
+router.put('/secondpass', (req, res) => {
+  console.log('can i see', req.body);
+  const updateQuery = `
+    UPDATE "project_list"
+    SET status = 'Ready for publisher'
+    WHERE "project_list".project_id = $1`;
 
   pool
     .query(updateQuery, [req.body])

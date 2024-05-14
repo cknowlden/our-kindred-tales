@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function LuluSubmit() {
   const history = useHistory();
   const dispatch = useDispatch();
   const projectID = useSelector((store) => store.projectsID);
   let [infoToAdd, setInfoToAdd] = useState({
-    cover_url: "",
-    interior_url: "",
-    shipping_level: "",
-    id: projectID.projectID
+    cover_url: '',
+    interior_url: '',
+    shipping_level: '',
+    id: projectID.projectID,
   });
   const handleAddCover = (event) => {
     setInfoToAdd({
@@ -31,8 +31,9 @@ function LuluSubmit() {
     });
   };
   const handleSubmit = (event) => {
-    dispatch({ type: "SUBMIT_ORDER", payload: infoToAdd });
-    history.push("/overview");
+    dispatch({ type: 'SUBMIT_ORDER', payload: infoToAdd });
+    dispatch({ type: 'CHANGE_STATUS_FINISH', payload: projectID.projectID });
+    history.push('/overview');
   };
   return (
     <div>
