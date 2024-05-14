@@ -55,15 +55,19 @@ router.put('/order', (req, res) => {
     });
 });
 
-router.get('/customer', (req, res) => {
-  console.log('this one please', req.body);
-  const { id } = req.body; // Destructure id from req.body
+
+router.get('/customer:id', (req, res) => {
+  const id = req.params.id;
+  // console.log('this one please', req.body);
+  // const { id } = req.body; // Destructure id from req.body
+
   const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
 
   pool
     .query(queryText, [id])
-    .then((res) => {
-      res.send(res.rows);
+    .then((dbRes) => {
+      console.log("db response:",dbRes);
+      res.send(dbRes.rows);
     })
     .catch((dbErr) => {
       console.log('Error getting project:', dbErr);
@@ -273,40 +277,5 @@ router.put('/customer', (req, res) => {
     });
 });
 
-router.put('/firstpass', (req, res) => {
-  console.log('can i see', req.body);
-  const updateQuery = `
-    UPDATE "project_list"
-    SET status = 'Client Review'
-    WHERE "project_list".project_id = $1`;
-
-  pool
-    .query(updateQuery, [req.body])
-    .then((result) => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log('Error updating project', error);
-      res.sendStatus(500);
-    });
-});
-
-router.put('/secondpass', (req, res) => {
-  console.log('can i see', req.body);
-  const updateQuery = `
-    UPDATE "project_list"
-    SET status = 'Ready for publisher'
-    WHERE "project_list".project_id = $1`;
-
-  pool
-    .query(updateQuery, [req.body])
-    .then((result) => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log('Error updating project', error);
-      res.sendStatus(500);
-    });
-});
 
 module.exports = router;

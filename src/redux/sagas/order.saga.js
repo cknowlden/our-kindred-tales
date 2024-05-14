@@ -11,9 +11,11 @@ function* submitOrder(action) {
   try {
     yield axios.put(`/api/overview/order`, action.payload);
 
-    const orderResponse = yield axios.get('/api/overview/customer');
+
+    const orderResponse = yield axios.get('/api/overview/customer'+action.payload.id);
     console.log(orderResponse);
-    const data = orderResponse.data.newData;
+    const data = orderResponse.data[0];
+    //comment error passing the data into the order object
 
     const order = {
       //required will have a manual entry for email
@@ -25,10 +27,10 @@ function* submitOrder(action) {
           external_id: 'item-reference-1',
           printable_normalization: {
             cover: {
-              source_url: data.cover_url,
+              source_url: //data.cover_url,
             },
             interior: {
-              source_url: data.interior_url,
+              source_url: //data.interior_url,
             },
             pod_package_id: '0600X0900FCSTDCW080CW444MXX',
           },
@@ -50,7 +52,8 @@ function* submitOrder(action) {
       shipping_level: data.shipping_level,
     };
 
-    console.log(order);
+
+    console.log("this is the order!!!",order);
     // Retrieve security token
     let accessToken = '';
     yield axios
@@ -74,7 +77,7 @@ function* submitOrder(action) {
     // Send order to lulu
     //TODO: need to return the luluAPI ID from the post route, and insert it into the DB.
 
-    yield;
+    yield
     axios
       .post(`${url}/print-jobs/`, order, {
         headers: {

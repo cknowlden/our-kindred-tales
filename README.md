@@ -30,7 +30,7 @@ Acknowledgement
 The Kindred Tales PDF Generator was created by a team of developers to include:
 Ashleigh Carter:
 Cali Knowlden: https://github.com/cknowlden
-Daniel Holt:
+Daniel Holt: https://github.com/DBholt0311
 Jan Michael A Biyo: https://github.com/janmichaelbiyo
 LuAnn Yang: https://github.com/luann-y
 Richard Barnitz: https://github.com/rbarnitz
