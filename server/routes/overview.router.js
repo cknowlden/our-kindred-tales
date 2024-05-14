@@ -115,29 +115,35 @@ router.post('/projects', async (req, res) => {
   }
 });
 
-router.put('/customer/:id', (req, res) => {
-  console.log('the project being updated', req.params);
-  console.log(req.params.id);
-  const { id } = req.params;
-
-  const { email, name, phone, street, city, state, post, country } = req.body; // Assuming data is coming from request body
-
+router.put('/customer', (req, res) => {
+  const order = req.body;
+  console.log('req body', req.body);
   const updateQuery = `
-    UPDATE project_lists 
-    SET 
-      email = $1,
-      name = $2,
-      phone = $3,
-      street = $4,
-      city = $5,  -- Fixed syntax: Added equal sign after city
-      state = $6,
-      post = $7,
-      country = $8
-    WHERE 
-      id = $9
+    UPDATE project_list
+    SET
+      name = $1,
+      phone = $2,
+      street = $3,
+      city = $4,
+      state = $5,
+      post = $6,
+      country = $7
+    WHERE
+      project_id = $8
   `;
 
-  const values = [email, name, phone, street, city, state, post, country, id]; // Arrange parameters in order
+  const id = order.id;
+
+  const values = [
+    order.name,
+    order.phone,
+    order.street,
+    order.city,
+    order.state,
+    order.post,
+    order.country,
+    id,
+  ]; // Arrange parameters in order
 
   pool
     .query(updateQuery, values)

@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function CustomerInfo() {
   const dispatch = useDispatch();
-  const projectsID = useSelector((store) => store.projectsID);
-  console.log('id:', projectsID);
+  const projectID = useSelector((store) => store.projectsID);
+  console.log('id:', projectID);
   let [customerToAdd, setCustomerToAdd] = useState({
+    id: projectID.projectID,
     name: '',
     phone: 0,
     street: '',
