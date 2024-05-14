@@ -57,12 +57,14 @@ router.put("/order", (req, res) => {
 module.exports = router;
 
 router.get("/customer", (req, res) => {
-  const id = req.body.id;
-  const queryText = `SELECT * FROM "project_list" WHERE "project_id"=$1;`;
+  let id = req.body.id;
+  let newData = req.body;
+  const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
   pool
     .query(queryText, [id])
     .then((data) => {
       res.send(data.rows);
+      newData = data;
     })
     .catch((dbErr) => {
       console.log("error getting project", dbErr);

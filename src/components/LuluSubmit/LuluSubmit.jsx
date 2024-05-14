@@ -7,10 +7,10 @@ function LuluSubmit() {
   const dispatch = useDispatch();
   const projectID = useSelector((store) => store.projectsID);
   let [infoToAdd, setInfoToAdd] = useState({
-    id: projectID.projectID,
     cover_url: "",
     interior_url: "",
     shipping_level: "",
+    id: projectID.projectID
   });
   const handleAddCover = (event) => {
     setInfoToAdd({
@@ -31,7 +31,7 @@ function LuluSubmit() {
     });
   };
   const handleSubmit = (event) => {
-    dispatch({ type: "SUBMIT_ORDER" });
+    dispatch({ type: "SUBMIT_ORDER", payload: infoToAdd });
     history.push("/overview");
   };
   return (
