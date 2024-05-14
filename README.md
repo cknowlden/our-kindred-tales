@@ -27,7 +27,15 @@ Feedback
 Disclaimer
 
 Acknowledgement
-The Kindred Tales PDF Generator was created by a team of developers to include Ashleigh Carter, Cali Knowlden, Daniel Holt, Jan Michael A Biyo, LuAnn Yang, and Richard Barnitz. Special thanks to Prime Digital Academy who equipped and helped us to make this application a reality. And to Kindred Tales owner and founder Nick Hern for allowing us to work with him on such a fantastic product.
+The Kindred Tales PDF Generator was created by a team of developers to include:
+Ashleigh Carter:
+Cali Knowlden: https://github.com/cknowlden
+Daniel Holt:
+Jan Michael A Biyo: https://github.com/janmichaelbiyo
+LuAnn Yang: https://github.com/luann-y
+Richard Barnitz: https://github.com/rbarnitz
+
+Special thanks to Prime Digital Academy who equipped and helped us to make this application a reality. And to Kindred Tales owner and founder Nick Hern for allowing us to work with him on such a fantastic product.
 
 Built With
 JS
