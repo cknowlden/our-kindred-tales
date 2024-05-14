@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function CustomerInfo() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const projectID = useSelector((store) => store.projectsID);
   console.log('id:', projectID);
@@ -66,6 +68,7 @@ function CustomerInfo() {
   };
   const addCustomer = () => {
     dispatch({ type: 'CUSTOMER_TO_ADD', payload: customerToAdd });
+    history.push('/overview');
     let customerInfo = customerToAdd;
     console.log(customerInfo);
   };

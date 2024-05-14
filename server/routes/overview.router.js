@@ -231,6 +231,7 @@ router.post('/projects', async (req, res) => {
 
 router.put('/customer', (req, res) => {
   const order = req.body;
+  const status = "ready to publish"
   console.log('req body', req.body);
   const updateQuery = `
     UPDATE project_list
@@ -241,9 +242,10 @@ router.put('/customer', (req, res) => {
       city = $4,
       state = $5,
       post = $6,
-      country = $7
+      country = $7,
+      status = $8
     WHERE
-      project_id = $8
+      project_id = $9
   `;
 
   const id = order.id;
@@ -256,6 +258,7 @@ router.put('/customer', (req, res) => {
     order.state,
     order.post,
     order.country,
+    status,
     id,
   ]; // Arrange parameters in order
 

@@ -9,7 +9,7 @@ import jobsSaga from './printJobs.saga';
 import deleteSaga from './delete.saga';
 import pagecountSaga from './pagecount.saga';
 import customerInfoSaga from './customerinfo.saga';
-import initialpdfSaga from './initialPDF.saga';
+import initialpdfSaga from './initialpdf.saga';
 import publishpdfSaga from './publishpdf.saga';
 
 // rootSaga is the primary saga.
