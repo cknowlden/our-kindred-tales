@@ -6,21 +6,21 @@ require("dotenv").config();
 const multer = require("multer");
 const upload = multer();
 
-// Create a new storage. Storage is an object used by GCS. Allows for uploading, downloading, deleting etc.
-//see import above
+// Create a new storage. Storage is an object used by Google Cloud Storage (GCS).
+//It Allows for uploading, downloading, deleting etc. on Google Cloud
 const storage = new Storage({
-  keyFilename: process.env.SERVICE_ACCOUNT_KEY_PATH, //This is using the client key etc. from .env file
+  keyFilename: process.env.SERVICE_ACCOUNT_KEY_PATH, //This is the JSON client key etc. from .env file. You get this file download when you sign up for a GCS API.
 });
 
 // // GET route to fetch JSON files from Google Cloud Storage
-// Used when rendering pdf for each unique pdf from GCS
+// Used to get JSON file from GCS to turn into a PDF
 // // don't forget to install npm install @google-cloud/storage
 router.get("/files/JSON/:pdfFileId", async (req, res) => {
   try {
     const pdfFileId = req.params.pdfFileId;
-    const folderPath = "json-files/";
+    const folderPath = "json-files/"; //json-files is one of the folder pathways on GCS bucket
 
-    const [files] = await storage.bucket("example-kindred-tales").getFiles({
+    const [files] = await storage.bucket("example-kindred-tales").getFiles({ //example-kindred-tales is name of GCS bucket
       prefix: folderPath,
     });
 
@@ -74,7 +74,7 @@ router.post('/uploadPDF', upload.single('pdfData'), async (req, res) => {
       // Gets PDF using Multer Middleware. Buffer (aka temporary storage) contains raw binary data of PDF.
       const fileBuffer = req.file.buffer;
 
-      // Extract book title and author from PDF data so that it can be stored on GCS by Title and Author
+      // Extract book title and author from PDF data so that it can be stored on GCS by Title and Author name
       const bookTitle = req.body.bookTitle;
       const author = req.body.author;
 
@@ -91,7 +91,7 @@ router.post('/uploadPDF', upload.single('pdfData'), async (req, res) => {
       const filename = `${bookTitle}_${author}.pdf`;
 
       // Destination file path in GCS
-      const destinationFilePath = `pdf-files/${filename}`;
+      const destinationFilePath = `pdf-files/${filename}`; //Here is the pathway to the pdf-files pathway on GCS hosting the PDF files
 
       // Upload the file buffer to GCS bucket
       await storage.bucket(bucketName).file(destinationFilePath).save(fileBuffer);
