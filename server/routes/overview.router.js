@@ -54,21 +54,25 @@ router.put("/order", (req, res) => {
       res.sendStatus(500);
     });
 });
-module.exports = router;
 
 router.get("/customer", (req, res) => {
-  const id = req.body.id;
-  const queryText = `SELECT * FROM "project_list" WHERE "project_id"=$1;`;
+  const { id } = req.body; // Destructure id from req.body
+  const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
+
   pool
     .query(queryText, [id])
-    .then((data) => {
-      res.send(data.rows);
+    .then((res) => {
+      res.send(res.rows);
     })
     .catch((dbErr) => {
-      console.log("error getting project", dbErr);
+      console.log("Error getting project:", dbErr);
       res.sendStatus(500);
     });
 });
+
+
+
+
 
 // Route to delete JSON files from GCS and from local database
 router.delete("/:id", async (req, res) => {

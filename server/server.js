@@ -28,7 +28,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
-app.use('/api/overview', overviewRouter); //pulls project info into overview page
+app.use('/api/overview', overviewRouter);
 app.use('/api/pdfmake', pdfmakeRouter);
 app.use('/api/gcs', gcsRouter);
 

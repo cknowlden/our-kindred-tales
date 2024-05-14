@@ -11,8 +11,10 @@ function* submitOrder(action) {
   try {
     yield axios.put(`/api/overview/order`, action.payload);
 
-   const data = yield axios.get("/api/overview/customer");
-   console.log("DATA:", data);
+    const orderResponse = yield axios.get("/api/overview/customer");
+    console.log(orderResponse);
+    const data = orderResponse.data.newData;
+    
     const order = {
       //required will have a manual entry for email
       contact_email: 'support@ourkindredtales.com',
@@ -47,6 +49,8 @@ function* submitOrder(action) {
       //required, will have a manual entry
       shipping_level: data.shipping_level,
     };
+    
+    console.log(order);
     // Retrieve security token
     let accessToken = "";
     yield axios
