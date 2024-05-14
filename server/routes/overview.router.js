@@ -117,7 +117,7 @@ router.post('/projects', async (req, res) => {
 
 router.put('/customer', (req, res) => {
   const order = req.body;
-
+  console.log('req body', req.body);
   const updateQuery = `
     UPDATE project_list
     SET
@@ -132,6 +132,8 @@ router.put('/customer', (req, res) => {
       project_id = $8
   `;
 
+  const id = order.id;
+
   const values = [
     order.name,
     order.phone,
@@ -140,7 +142,7 @@ router.put('/customer', (req, res) => {
     order.state,
     order.post,
     order.country,
-    order.id,
+    id,
   ]; // Arrange parameters in order
 
   pool
