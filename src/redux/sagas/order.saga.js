@@ -1,20 +1,20 @@
 /// <reference types="vite/client" />
 // DON'T FORGET TO REPLACE SANDBOX URL WITH REAL LULU FOR CLIENT
-import { put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
+import { put, takeLatest } from 'redux-saga/effects';
+import axios from 'axios';
 const luluKey = import.meta.env.VITE_LULU_KEY;
 
 function* submitOrder(action) {
-  const url = "https://api.sandbox.lulu.com";
-  const grantData = "grant_type=client_credentials";
-  
+  const url = 'https://api.sandbox.lulu.com';
+  const grantData = 'grant_type=client_credentials';
+
   try {
     yield axios.put(`/api/overview/order`, action.payload);
 
-    const orderResponse = yield axios.get("/api/overview/customer");
+    const orderResponse = yield axios.get('/api/overview/customer');
     console.log(orderResponse);
     const data = orderResponse.data.newData;
-    
+
     const order = {
       //required will have a manual entry for email
       contact_email: 'support@ourkindredtales.com',
@@ -49,27 +49,27 @@ function* submitOrder(action) {
       //required, will have a manual entry
       shipping_level: data.shipping_level,
     };
-    
+
     console.log(order);
     // Retrieve security token
-    let accessToken = "";
+    let accessToken = '';
     yield axios
       .post(
         `${url}/auth/realms/glasstree/protocol/openid-connect/token`,
         grantData,
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            'Content-Type': 'application/x-www-form-urlencoded',
             Authorization: luluKey,
           },
         }
       )
       .then((response) => {
         accessToken = response.data.access_token;
-        console.log("Response:", accessToken);
+        console.log('Response:', accessToken);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
       });
     // Send order to lulu
     //TODO: need to return the luluAPI ID from the post route, and insert it into the DB.
@@ -79,23 +79,23 @@ function* submitOrder(action) {
       .post(`${url}/print-jobs/`, order, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
-        console.log("Response:", response.data);
+        console.log('Response:', response.data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
       });
   } catch (error) {
-    console.log("Error with order submit:", error);
-    yield put({ type: "ORDER_FAILED" });
+    console.log('Error with order submit:', error);
+    yield put({ type: 'ORDER_FAILED' });
   }
 }
 
 function* orderSaga() {
-  yield takeLatest("SUBMIT_ORDER", submitOrder);
+  yield takeLatest('SUBMIT_ORDER', submitOrder);
 }
 
 export default orderSaga;
