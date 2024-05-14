@@ -74,7 +74,7 @@ router.get("/customer", (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const projectId = req.params.id;
-    const folderPath = "json-files/";
+    const folderPath = "json-files/"; //folder path to json/files on GCS to delete JSON from GCS
 
     let files = [];
     let nextPageToken = null;
