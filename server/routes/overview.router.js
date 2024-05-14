@@ -55,10 +55,12 @@ router.put('/order', (req, res) => {
     });
 });
 
+
 router.get('/customer:id', (req, res) => {
   const id = req.params.id;
   // console.log('this one please', req.body);
   // const { id } = req.body; // Destructure id from req.body
+
   const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
 
   pool

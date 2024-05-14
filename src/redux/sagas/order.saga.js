@@ -11,10 +11,12 @@ function* submitOrder(action) {
   try {
     yield axios.put(`/api/overview/order`, action.payload);
 
+
     const orderResponse = yield axios.get('/api/overview/customer'+action.payload.id);
     console.log(orderResponse);
     const data = orderResponse.data[0];
     //comment error passing the data into the order object
+
     const order = {
       //required will have a manual entry for email
       contact_email: 'support@ourkindredtales.com',
@@ -49,6 +51,7 @@ function* submitOrder(action) {
       //required, will have a manual entry
       shipping_level: data.shipping_level,
     };
+
 
     console.log("this is the order!!!",order);
     // Retrieve security token

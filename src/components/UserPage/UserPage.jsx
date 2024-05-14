@@ -1,15 +1,27 @@
 import React from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
   return (
-    <div className="container">
-      <h2>Welcome, {user.username}!</h2>
-      <p>Your ID is: {user.id}</p>
-      <LogOutButton className="btn" />
+    <div>
+      <center>
+        <img
+          src={'/public/kindredtaleslogo.png'}
+          alt="Checkmark"
+          className="checkmark"
+        />
+      </center>
+      <br />
+      <center>
+        <h1>Welcome, {user.username}!</h1>
+        <h2>Please proceed to the Overview Page to view current projects</h2>
+        <Link to="Overview">
+          <button className="btn">Overview</button>
+        </Link>
+      </center>
     </div>
   );
 }

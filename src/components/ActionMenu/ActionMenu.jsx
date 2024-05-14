@@ -14,6 +14,7 @@ function ActionMenu({ pdfID, projectID }) {
   const open = Boolean(anchorEl);
   const history = useHistory();
   const projects = useSelector((store) => store.projects);
+  const projectsID = useSelector((store) => store.projectsID);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,6 +65,11 @@ function ActionMenu({ pdfID, projectID }) {
 
       dispatch({
         type: 'SET_PROJECTS_ID',
+        payload: { projectID },
+      });
+
+      dispatch({
+        type: 'CHANGE_INITIAL_STATUS',
         payload: { projectID },
       });
 
