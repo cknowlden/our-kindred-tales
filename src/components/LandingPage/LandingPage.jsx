@@ -19,7 +19,7 @@ function LandingPage() {
 
       <div className="grid">
         <div className="grid-col grid-col_8">
-          <p>Welcome to Our Kindred Tales administration site</p>
+          <p>Welcome to Our Kindred Tales administration site.</p>
         </div>
         <div className="grid-col grid-col_4">
           <RegisterForm />
