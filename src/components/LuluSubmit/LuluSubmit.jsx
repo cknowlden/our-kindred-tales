@@ -1,60 +1,38 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function LuluSubmit() {
-  const Order = {
-    //required will have a manual entry for email
-    contact_email: 'support@ourkindredtales.com',
-    external_id: 'KindredTales',
-    //required
-    line_items: [
-      {
-        external_id: 'item-reference-1',
-        printable_normalization: {
-          cover: {
-            source_url: '',
-          },
-          interior: {
-            source_url: '',
-          },
-          pod_package_id: '0600X0900FCSTDCW080CW444MXX',
-        },
-        quantity: 1,
-        title: '',
-      },
-    ],
-    //required will have a manual entry
-    shipping_address: {
-      city: '',
-      country_code: '',
-      name: '',
-      phone_number: '',
-      postcode: '',
-      state_code: '',
-      street1: '',
-    },
-    //required, will have a manual entry
-    shipping_level: '',
-  };
-
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const projectID = useSelector((store) => store.projectsID);
+  let [infoToAdd, setInfoToAdd] = useState({
+    id: projectID.projectID,
+    cover_url: "",
+    interior_url: "",
+    shipping_level: "",
+  });
   const handleAddCover = (event) => {
-    setOrder({
-      ...orderToAdd,
-      country: event.target.value,
+    setInfoToAdd({
+      ...infoToAdd,
+      cover_url: event.target.value,
     });
   };
-
   const handleAddContent = (event) => {
-    setOrder({
-      ...orderToAdd,
-      country: event.target.value,
+    setInfoToAdd({
+      ...infoToAdd,
+      interior_url: event.target.value,
     });
   };
-
   const handleShippingLevel = (event) => {
-    setOrder({
-      ...orderToAdd,
-      country: event.target.value,
+    setInfoToAdd({
+      ...infoToAdd,
+      shipping_level: event.target.value,
     });
+  };
+  const handleSubmit = (event) => {
+    dispatch({ type: "SUBMIT_ORDER" });
+    history.push("/overview");
   };
   return (
     <div>
@@ -77,15 +55,11 @@ function LuluSubmit() {
       </center>
       <br />
       <center>
-        <button
-          onClick={() => dispatch({ type: 'SUBMIT_ORDER' })}
-          className="btn"
-        >
+        <button onClick={handleSubmit} id="submitBtn" className="btn">
           Submit
         </button>
       </center>
     </div>
   );
 }
-
 export default LuluSubmit;

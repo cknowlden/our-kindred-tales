@@ -7,10 +7,48 @@ const luluKey = import.meta.env.VITE_LULU_KEY;
 function* submitOrder(action) {
   const url = "https://api.sandbox.lulu.com";
   const grantData = "grant_type=client_credentials";
-
+  
   try {
-    let accessToken = "";
+    yield axios.put(`/api/overview/order`, action.payload);
+
+   const data = yield axios.get("/api/overview/customer");
+   console.log("DATA:", data);
+    const order = {
+      //required will have a manual entry for email
+      contact_email: 'support@ourkindredtales.com',
+      external_id: 'KindredTales',
+      //required
+      line_items: [
+        {
+          external_id: 'item-reference-1',
+          printable_normalization: {
+            cover: {
+              source_url: data.cover_url,
+            },
+            interior: {
+              source_url: data.interior_url,
+            },
+            pod_package_id: '0600X0900FCSTDCW080CW444MXX',
+          },
+          quantity: 1,
+          title: data.project_name,
+        },
+      ],
+      //required will have a manual entry
+      shipping_address: {
+        city: data.city,
+        country_code: data.country,
+        name: data.name,
+        phone_number: data.phone,
+        postcode: data.post,
+        state_code: data.state,
+        street1: data.street,
+      },
+      //required, will have a manual entry
+      shipping_level: data.shipping_level,
+    };
     // Retrieve security token
+    let accessToken = "";
     yield axios
       .post(
         `${url}/auth/realms/glasstree/protocol/openid-connect/token`,
@@ -30,48 +68,11 @@ function* submitOrder(action) {
         console.error("Error:", error);
       });
     // Send order to lulu
-    //TODO: need to pull project info from DB in order to populate the data object below.
     //TODO: need to return the luluAPI ID from the post route, and insert it into the DB.
-    const data = {
-      //required will have a manual entry for email
-      contact_email: "test@test.com",
-      external_id: "demo-time",
-      //required
-      line_items: [
-        {
-          external_id: "item-reference-1",
-          printable_normalization: {
-            cover: {
-              source_url:
-                "https://www.dropbox.com/s/7bv6mg2tj0h3l0r/lulu_trade_perfect_template.pdf?dl=1&raw=1",
-            },
-            interior: {
-              source_url:
-                "https://www.dropbox.com/s/r20orb8umqjzav9/lulu_trade_interior_template-32.pdf?dl=1&raw=1",
-            },
-            pod_package_id: "0600X0900BWSTDPB060UW444MXX",
-          },
-          quantity: 1,
-          title: "My Book",
-        },
-      ],
-      production_delay: 120,
-      //required will have a manual entry
-      shipping_address: {
-        city: "Lübeck",
-        country_code: "GB",
-        name: "Hans Dampf",
-        phone_number: "844-212-0689",
-        postcode: "PO1 3AX",
-        state_code: "",
-        street1: "Holstenstr. 48",
-      },
-      //required, will have a manual entry
-      shipping_level: "MAIL",
-    };
+
     yield;
     axios
-      .post(`${url}/print-jobs/`, data, {
+      .post(`${url}/print-jobs/`, order, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
