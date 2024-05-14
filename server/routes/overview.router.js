@@ -25,20 +25,77 @@ router.get('/', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  console.log('this is the delete that i want', req.params);
-  console.log(req.params.id);
-  const deleteQuery = `DELETE FROM "project_list" WHERE "project_id"=$1;`;
-  pool
-    .query(deleteQuery, [req.params.id])
-    .then((result) => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log('Error DELETING project', error);
-      res.sendStatus(500);
-    });
+
+// Route to delete JSON files from GCS and from local database
+router.delete('/:id', async (req, res) => {
+  try {
+    const projectId = req.params.id;
+    const folderPath = 'json-files/';
+
+    let files = [];
+    let nextPageToken = null;
+
+    // Paginate through files in the specified folder of the GCS bucket
+    do {
+      const [result] = await storage.bucket('example-kindred-tales').getFiles({
+        prefix: folderPath,
+        pageToken: nextPageToken
+      });
+
+      files = files.concat(result);
+
+      nextPageToken = result.nextPageToken;
+    } while (nextPageToken);
+
+    console.log('Total JSON files found:', files.length);
+
+    const projectPdfFileIdResult = await pool.query('SELECT pdf_file_id FROM project_list WHERE project_id = $1', [projectId]);
+    const projectPdfFileId = projectPdfFileIdResult.rows[0]?.pdf_file_id;
+
+    if (!projectPdfFileId) {
+      console.log('PDF file ID not found in local database for projectId:', projectId);
+      return res.sendStatus(404);
+    }
+
+    console.log(`PDF file ID for projectId ${projectId}: ${projectPdfFileId}`);
+
+    // Iterate through each JSON file to find the one with matching pdfFileId
+    for (const file of files) {
+      const data = await file.download();
+      const jsonString = data[0].toString();
+      const content = JSON.parse(jsonString);
+
+      // Extract pdfFileId from the content
+      const { pdfFileId } = content.metadata || {};
+
+      console.log(`Processing file ${file.name} with pdfFileId: ${pdfFileId}`);
+
+      // Compare projectPdfFileId with pdfFileId
+      if (projectPdfFileId === pdfFileId) {
+        console.log(`Matching pdfFileId found for projectId ${projectId}`);
+        // Delete file from GCS
+        await file.delete();
+        console.log('JSON file deleted from GCS');
+
+        await pool.query('DELETE FROM "project_details" WHERE "pdf_file_id" = $1', [projectPdfFileId]);
+
+        await pool.query('DELETE FROM "project_list" WHERE "project_id" = $1', [projectId]);
+
+        console.log('Project details and file entry deleted from the local database');
+
+        return res.sendStatus(200);
+      }
+    }
+
+    console.log('JSON file not found in GCS for projectId:', projectId);
+    return res.sendStatus(404);
+  } catch (error) {
+    console.error('Error deleting JSON file:', error);
+    return res.sendStatus(500);
+  }
 });
+
+
 
 // Route to get data from GCS
 router.get('/files/JSON', async (req, res) => {
