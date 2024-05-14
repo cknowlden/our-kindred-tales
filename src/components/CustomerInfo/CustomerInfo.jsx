@@ -6,6 +6,7 @@ function CustomerInfo() {
   const projectsID = useSelector((store) => store.projectsID);
   console.log('id:', projectsID);
   let [customerToAdd, setCustomerToAdd] = useState({
+    id: projectsID,
     name: '',
     phone: 0,
     street: '',
