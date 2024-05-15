@@ -55,15 +55,18 @@ router.put('/order', (req, res) => {
     });
 });
 
-router.get('/customer', (req, res) => {
-  console.log('this one please', req.body);
-  const { id } = req.body; // Destructure id from req.body
+router.get('/customer/:id', (req, res) => {
+  console.log('this one please', req.params.id);
+  const id = req.params.id;
+  // console.log('this one please', req.body);
+  // const { id } = req.body; // Destructure id from req.body
   const queryText = `SELECT * FROM "project_list" WHERE project_id=$1;`;
 
   pool
     .query(queryText, [id])
-    .then((res) => {
-      res.send(res.rows);
+    .then((dbRes) => {
+      console.log('db response:', dbRes.rows[0]);
+      res.send(dbRes.rows[0]);
     })
     .catch((dbErr) => {
       console.log('Error getting project:', dbErr);
@@ -231,7 +234,7 @@ router.post('/projects', async (req, res) => {
 
 router.put('/customer', (req, res) => {
   const order = req.body;
-  const status = "ready to publish"
+  const status = 'ready to publish';
   console.log('req body', req.body);
   const updateQuery = `
     UPDATE project_list

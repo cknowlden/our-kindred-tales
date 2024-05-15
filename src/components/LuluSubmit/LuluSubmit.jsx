@@ -32,7 +32,6 @@ function LuluSubmit() {
   };
   const handleSubmit = (event) => {
     dispatch({ type: 'SUBMIT_ORDER', payload: infoToAdd });
-    dispatch({ type: 'CHANGE_STATUS_FINISH', payload: projectID.projectID });
     history.push('/overview');
   };
   return (

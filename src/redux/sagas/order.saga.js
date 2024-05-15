@@ -1,7 +1,8 @@
-/// <reference types="vite/client" />
+// <reference types="vite/client" />
 // DON'T FORGET TO REPLACE SANDBOX URL WITH REAL LULU FOR CLIENT
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 const luluKey = import.meta.env.VITE_LULU_KEY;
 
 function* submitOrder(action) {
@@ -11,9 +12,13 @@ function* submitOrder(action) {
   try {
     yield axios.put(`/api/overview/order`, action.payload);
 
-    const orderResponse = yield axios.get('/api/overview/customer');
-    console.log(orderResponse);
-    const data = orderResponse.data.newData;
+    const orderResponse = yield axios.get(
+      `/api/overview/customer/${action.payload.id}`
+    );
+
+    console.log(orderResponse.data.cover_url);
+    const data = orderResponse;
+    // console.log(data);
 
     const order = {
       //required will have a manual entry for email
@@ -25,29 +30,30 @@ function* submitOrder(action) {
           external_id: 'item-reference-1',
           printable_normalization: {
             cover: {
-              source_url: data.cover_url,
+              source_url: data.data.cover_url,
             },
             interior: {
-              source_url: data.interior_url,
+              source_url: data.data.interior_url,
             },
             pod_package_id: '0600X0900FCSTDCW080CW444MXX',
           },
           quantity: 1,
-          title: data.project_name,
+          title: data.data.project_name,
         },
       ],
+
       //required will have a manual entry
       shipping_address: {
-        city: data.city,
-        country_code: data.country,
-        name: data.name,
-        phone_number: data.phone,
-        postcode: data.post,
-        state_code: data.state,
-        street1: data.street,
+        city: data.data.city,
+        country_code: data.data.country,
+        name: data.data.name,
+        phone_number: data.data.phone,
+        postcode: data.data.post,
+        state_code: data.data.state,
+        street1: data.data.street,
       },
       //required, will have a manual entry
-      shipping_level: data.shipping_level,
+      shipping_level: data.data.shipping_level,
     };
 
     console.log(order);
